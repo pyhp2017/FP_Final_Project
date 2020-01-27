@@ -323,3 +323,52 @@ void drawgrid(int n)
     }
 }
 
+// Functions to Remove a Node
+// Remove Front is for remove first node
+struct cell *removeFront(struct cell *A)
+{
+    if (A == NULL)
+    {
+        return NULL;
+    }
+    struct cell *front = A;
+    A = A->next;
+    front->next = NULL;
+    if (A == front)
+    {
+        A = NULL;
+    }
+    free(front);
+    return A;
+}
+struct cell *RemoveAny(struct cell *head, struct cell *temp)
+{
+    if (temp == NULL)
+    {
+        return NULL;
+    }
+    if (temp == head)
+    {
+        return removeFront(head);
+    }
+
+    struct cell *move = head;
+    while (move != NULL)
+    {
+        if (move->next == temp)
+        {
+            break;
+        }
+        move = move->next;
+    }
+    if (move != NULL)
+    {
+        struct cell *Movagat = move->next;
+        move->next = Movagat->next;
+        Movagat->next = NULL;
+        free(Movagat);
+    }
+
+    return head;
+}
+

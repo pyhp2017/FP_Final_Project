@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include ".\Menu.h"
-#include ".\RandString.h"
+#include "HeaderFiles\Menu.h"
+#include "HeaderFiles\RandString.h"
 
 //Global Variables and Arrays
 char grid[100][100];
@@ -522,15 +522,15 @@ void SinglePlayer(int flag)
     int ChosenCell;
     int OptionList2;
     int movechosen;
-    // if (flag == 1) //Not for Loading
-    // {
+    if (flag == 1) //Not for Loading
+    {
         printf("Please Enter Number of Cells: ");
         scanf("%d", &NumberOfCells);
         for (int i = 0; i < NumberOfCells; i++)
         {
             insert_end(n);
         }
-    // }
+    }
     while (1)
     {
         system("cls");

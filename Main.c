@@ -446,6 +446,7 @@ void MoveLeft(int ChosenCell)
     }
 }
 
+// Boost Energy in Energy Blocks
 void BoostEnergy(int ChosenCell)
 {
     tmp = search(start, ChosenCell);
@@ -478,3 +479,37 @@ void BoostEnergy(int ChosenCell)
         }
     }
 }
+
+// Split Cell in MITOSIS Blocks
+void SplitCell(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        int idBackup = tmp->id;
+        //Check if Split is possible
+        if (grid[Xbackup][Ybackup] == 'M')
+        {
+            //Split Code
+            //check if it's possible to split
+            if (tmp->EnergyCell >= 80)
+            {
+                start = RemoveAny(start, tmp);
+                cells[Xbackup][Ybackup] = '\0';
+                insert_split_witoutrand(n, Xbackup, Ybackup);
+                insert_Split_RandAtraf(n, Xbackup, Ybackup);
+            }
+            else
+            {
+                printf("\nYour Fucking Cell Energy is too low !\n\n");
+            }
+        }
+        else
+        {
+            printf("\nYou Can Not Split ON %c\n\n", grid[Xbackup][Ybackup]);
+        }
+    }
+}
+

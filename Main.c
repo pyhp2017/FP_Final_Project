@@ -267,3 +267,59 @@ struct cell *search(struct cell *begin, int id)
     }
     return NULL;
 }
+
+// Draw Grid and Change Background Colors :)
+void drawgrid(int n)
+{
+    printf("*");
+    for (int z = 0; z < n; z++)
+    {
+        printf("    %d", z);
+    }
+    printf("\n");
+
+    for (int j = 0; j < n; j++)
+    {
+        printf("   ");
+        for (int z = 0; z < n; z++)
+        {
+            printf("_____");
+        }
+        printf("\n");
+        printf("%d  ", j);
+        for (int i = 0; i < n; i++)
+        {
+            if (grid[i][j] == 'E')
+            {
+                printf("\x1b[42m");
+            }
+            else if (grid[i][j] == 'N')
+            {
+                printf("\x1b[30;47m");
+            }
+            else if (grid[i][j] == 'F')
+            {
+                printf("\x1b[41m");
+            }
+            else if (grid[i][j] == 'M')
+            {
+                printf("\x1b[44m");
+            }
+            else
+            {
+                printf("\x1b[0m");
+            }
+
+            printf("| %c |", cells[i][j]);
+        }
+        printf("\x1b[0m");
+        printf("\n");
+    }
+
+    printf("   ");
+    for (int w = 0; w < n; w++)
+    {
+        printf("-----");
+    }
+}
+

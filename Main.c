@@ -514,7 +514,7 @@ void SplitCell(int ChosenCell)
 }
 
 // Signle Player Function
-void SinglePlayer()
+void SinglePlayer(int flag)
 {
     // Single player Mode
     int NumberOfCells;
@@ -522,11 +522,14 @@ void SinglePlayer()
     int OptionList2;
     int movechosen;
 
-    printf("Please Enter Number of Cells: ");
-    scanf("%d", &NumberOfCells);
-    for (int i = 0; i < NumberOfCells; i++)
+    if (flag == 1)
     {
-        insert_end(n);
+        printf("Please Enter Number of Cells: ");
+        scanf("%d", &NumberOfCells);
+        for (int i = 0; i < NumberOfCells; i++)
+        {
+            insert_end(n);
+        }
     }
 
     while (1)
@@ -583,7 +586,7 @@ void SinglePlayer()
 
         case 4:
             //Save
-            // Save();
+            Save();
             break;
 
         case 5:
@@ -591,6 +594,34 @@ void SinglePlayer()
             break;
         }
     }
+}
+
+void Save()
+{
+    // Save Cells Array
+    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "wb+");
+    fwrite(cells, sizeof(char), sizeof(cells), SaveCell);
+    fclose(SaveCell);
+    // Save EnergyBlocks Array
+    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "wb+");
+    fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+    fclose(SaveBlockE);
+    // Save Linkedlist
+    struct cell *move = start;
+    FILE *SaveLink = fopen("SAVE\\SavedLink.data", "wb+");
+    int NumberOfCells = count(start);
+    fwrite(&NumberOfCells, sizeof(int), 1, SaveLink);
+    while (move)
+    {
+        fwrite(move, 1, sizeof(struct cell), SaveLink);
+        move = move->next;
+    }
+    fclose(SaveLink);
+    // Update In map File
+    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
+    fwrite(&n, sizeof(int), 1, SaveMAP);
+    fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
+    fclose(SaveMAP);
 }
 
 // MAIN FUNCTION
@@ -611,7 +642,7 @@ int main()
         break;
     case 2:
         // Single player;
-        SinglePlayer();
+        SinglePlayer(1);
         break;
     case 3:
         //Multi player

@@ -513,3 +513,86 @@ void SplitCell(int ChosenCell)
     }
 }
 
+
+// Signle Player Function
+void SinglePlayer(int flag)
+{
+    // Single player Mode
+    int NumberOfCells;
+    int ChosenCell;
+    int OptionList2;
+    int movechosen;
+    // if (flag == 1) //Not for Loading
+    // {
+        printf("Please Enter Number of Cells: ");
+        scanf("%d", &NumberOfCells);
+        for (int i = 0; i < NumberOfCells; i++)
+        {
+            insert_end(n);
+        }
+    // }
+    while (1)
+    {
+        system("cls");
+        drawgrid(n);
+        display(start);
+        printf("Please choose one of your cells: ");
+        scanf("%d", &ChosenCell);
+        Menu1();
+        printf("Please choose your option: ");
+        scanf("%d", &OptionList2);
+        switch (OptionList2)
+        {
+        case 1:
+            // MOVE
+            MenuMove();
+            printf("Please choose your option: ");
+            scanf("%d", &movechosen);
+
+            switch (movechosen)
+            {
+            case 1:
+                // UP Move
+                MoveUP(ChosenCell);
+                break;
+
+            case 2:
+                // Down Move
+                MovdeDown(ChosenCell);
+                break;
+
+            case 3:
+                // Right
+                MoveRight(ChosenCell);
+                break;
+
+            case 4:
+                // Left
+                MoveLeft(ChosenCell);
+                break;
+            }
+            break;
+
+        case 2:
+            // Split a Cell
+            SplitCell(ChosenCell);
+            break;
+
+        case 3:
+            //Boost energy
+            BoostEnergy(ChosenCell);
+            break;
+
+        case 4:
+            //Save
+            // Save();
+            break;
+
+        case 5:
+            exit(0);
+            break;
+        }
+    }
+}
+
+

@@ -372,31 +372,80 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
     return head;
 }
 
-
-// Function to Write Linked list on binaryFile
-void WriteListToFile(struct cell *start) 
+//Functions to Read Linked List from binaryFile
+struct cell *ReadNextFromFile(struct cell *start, FILE *pFile)
 {
-	FILE *pFile;
-	pFile = fopen("SAVE\\SavedLink.data", "wb+");
-	if(pFile != NULL) {
-		struct cell *currentCar = start;
-		struct cell *holdNext = NULL;		
-		while(currentCar != NULL) 
+    size_t returnValue;
+    if (start == NULL)
+    {
+        start = malloc(sizeof(struct cell));
+        returnValue = fread(start, sizeof(struct cell), 1, pFile);
+        start->next = NULL;
+    }
+    else
+    {
+        struct cell *indexCar = start;
+        struct cell *newCar = malloc(sizeof(struct cell));
+        while (indexCar->next != NULL)
         {
-			holdNext = currentCar->next;
-			currentCar->next = NULL;
-			fseek(pFile, 0, SEEK_END);
-			fwrite(currentCar, sizeof(struct cell), 1, pFile);		
-			currentCar->next = holdNext;
-			holdNext = NULL;
-			currentCar = currentCar->next;
-		}
-		fclose(pFile);
-		pFile = NULL;
-	}	
+            indexCar = indexCar->next;
+        }
+        returnValue = fread(newCar, sizeof(struct cell), 1, pFile);
+        indexCar->next = newCar;
+        newCar->next = NULL;
+    }
+    return start;
+}
+struct cell *ReadListIn(struct cell *start)
+{
+
+    FILE *pFile;
+    pFile = fopen("SAVE\\SavedLink.data", "rb");
+    if (pFile != NULL)
+    {
+
+        start = NULL;
+        fseek(pFile, 0, SEEK_END);
+        long fileSize = ftell(pFile);
+        rewind(pFile);
+
+        int numEntries = (int)(fileSize / (sizeof(struct cell)));
+        // printf("numEntries:%d\n",numEntries);
+
+        int loop = 0;
+        for (loop = 0; loop < numEntries; ++loop)
+        {
+            fseek(pFile, (sizeof(struct cell) * loop), SEEK_SET);
+            start = ReadNextFromFile(start, pFile);
+        }
+    }
+
+    return start;
 }
 
-
+// Function to Write Linked list on binaryFile
+void WriteListToFile(struct cell *start)
+{
+    FILE *pFile;
+    pFile = fopen("SAVE\\SavedLink.data", "wb+");
+    if (pFile != NULL)
+    {
+        struct cell *currentCar = start;
+        struct cell *holdNext = NULL;
+        while (currentCar != NULL)
+        {
+            holdNext = currentCar->next;
+            currentCar->next = NULL;
+            fseek(pFile, 0, SEEK_END);
+            fwrite(currentCar, sizeof(struct cell), 1, pFile);
+            currentCar->next = holdNext;
+            holdNext = NULL;
+            currentCar = currentCar->next;
+        }
+        fclose(pFile);
+        pFile = NULL;
+    }
+}
 
 // Function To move cell
 void MoveUP(int ChosenCell)
@@ -622,6 +671,7 @@ void SinglePlayer(int flag)
     }
 }
 
+//Save Function
 void Save()
 {
     // Save Cells Array
@@ -641,19 +691,28 @@ void Save()
     fclose(SaveMAP);
 }
 
-// void load()
-// {
-//     // Load Cells Array
-//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
-//     fread(cells, sizeof(char), sizeof(cells), SaveCell);
-//     fclose(SaveCell);
-//     // Load EnergyBlocks Array
-//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
-//     fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-//     fclose(SaveBlockE);
-//     //Load Linked list
+// Load Function
+void load()
+{
+    // Load Cells Array
+    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
+    fread(cells, sizeof(char), sizeof(cells), SaveCell);
+    fclose(SaveCell);
+    // Load EnergyBlocks Array
+    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
+    fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+    fclose(SaveBlockE);
+    //Load Linked list
+    start = ReadListIn(start);
+    // Load MAP
+    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "rb");
+    fread(&n, sizeof(int), 1, SaveMAP);
+    fread(grid, sizeof(char), sizeof(grid), SaveMAP);
+    fclose(SaveMAP);
 
-// }
+    // If it was Signle Player
+    SinglePlayer(0);
+}
 
 // MAIN FUNCTION
 int main()
@@ -669,7 +728,7 @@ int main()
     {
     case 1:
         //Load Game code
-        // load();
+        load();
         break;
     case 2:
         // Single player;

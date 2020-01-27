@@ -372,6 +372,32 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
     return head;
 }
 
+
+// Function to Write Linked list on binaryFile
+void WriteListToFile(struct cell *start) 
+{
+	FILE *pFile;
+	pFile = fopen("SAVE\\SavedLink.data", "wb+");
+	if(pFile != NULL) {
+		struct cell *currentCar = start;
+		struct cell *holdNext = NULL;		
+		while(currentCar != NULL) 
+        {
+			holdNext = currentCar->next;
+			currentCar->next = NULL;
+			fseek(pFile, 0, SEEK_END);
+			fwrite(currentCar, sizeof(struct cell), 1, pFile);		
+			currentCar->next = holdNext;
+			holdNext = NULL;
+			currentCar = currentCar->next;
+		}
+		fclose(pFile);
+		pFile = NULL;
+	}	
+}
+
+
+
 // Function To move cell
 void MoveUP(int ChosenCell)
 {
@@ -607,19 +633,7 @@ void Save()
     fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
     fclose(SaveBlockE);
     // Save Linkedlist
-    struct cell *move = start, *holdNext = NULL;
-    FILE *SaveLink = fopen("SAVE\\SavedLink.data", "wb+");
-    while (move != NULL)
-    {
-        holdNext = move->next;
-        move->next = NULL;
-        fseek(SaveLink, 0, SEEK_END);
-        fwrite(move, sizeof(struct cell), 1, SaveLink);
-        move->next = holdNext;
-        holdNext = NULL;
-        move = move->next;
-    }
-    fclose(SaveLink);
+    WriteListToFile(start);
     //Save Map
     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
     fwrite(&n, sizeof(int), 1, SaveMAP);
@@ -627,19 +641,19 @@ void Save()
     fclose(SaveMAP);
 }
 
-void load()
-{
-    // Load Cells Array
-    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
-    fread(cells, sizeof(char), sizeof(cells), SaveCell);
-    fclose(SaveCell);
-    // Load EnergyBlocks Array
-    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
-    fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-    fclose(SaveBlockE);
-    //Load Linked list
-    
-}
+// void load()
+// {
+//     // Load Cells Array
+//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
+//     fread(cells, sizeof(char), sizeof(cells), SaveCell);
+//     fclose(SaveCell);
+//     // Load EnergyBlocks Array
+//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
+//     fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+//     fclose(SaveBlockE);
+//     //Load Linked list
+
+// }
 
 // MAIN FUNCTION
 int main()

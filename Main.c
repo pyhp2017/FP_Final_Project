@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "HeaderFiles\Menu.h"
-#include "HeaderFiles\RandString.h"
+#include "HeaderFiles\\Menu.h"
+#include "HeaderFiles\\RandString.h"
 
 //Global Variables and Arrays
 char grid[100][100];
@@ -175,7 +175,7 @@ void insert_Split_RandAtraf(int n, int x, int y)
 // Put N , F , E , M in grid and read Binary File
 void PutINGride()
 {
-    FILE *fpin = fopen("map6.bin", "rb");
+    FILE *fpin = fopen("MAPS\\map6.bin", "rb");
     fread(&n, sizeof(int), 1, fpin);
     int pos;
     char map[n][n];
@@ -513,24 +513,22 @@ void SplitCell(int ChosenCell)
     }
 }
 
-
 // Signle Player Function
-void SinglePlayer(int flag)
+void SinglePlayer()
 {
     // Single player Mode
     int NumberOfCells;
     int ChosenCell;
     int OptionList2;
     int movechosen;
-    if (flag == 1) //Not for Loading
+
+    printf("Please Enter Number of Cells: ");
+    scanf("%d", &NumberOfCells);
+    for (int i = 0; i < NumberOfCells; i++)
     {
-        printf("Please Enter Number of Cells: ");
-        scanf("%d", &NumberOfCells);
-        for (int i = 0; i < NumberOfCells; i++)
-        {
-            insert_end(n);
-        }
+        insert_end(n);
     }
+
     while (1)
     {
         system("cls");
@@ -595,7 +593,6 @@ void SinglePlayer(int flag)
     }
 }
 
-
 // MAIN FUNCTION
 int main()
 {
@@ -614,7 +611,7 @@ int main()
         break;
     case 2:
         // Single player;
-        SinglePlayer(1);
+        SinglePlayer();
         break;
     case 3:
         //Multi player

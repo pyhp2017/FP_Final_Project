@@ -596,3 +596,32 @@ void SinglePlayer(int flag)
 }
 
 
+// MAIN FUNCTION
+int main()
+{
+    srand(time(0));
+    int option;
+    enum blocks road;
+    PutINGride();
+    menu();
+    printf("Please Select an Option: ");
+    scanf("%d", &option);
+    switch (option)
+    {
+    case 1:
+        //Load Game code
+        // load();
+        break;
+    case 2:
+        // Single player;
+        SinglePlayer(1);
+        break;
+    case 3:
+        //Multi player
+
+        break;
+    case 4:
+        exit(0);
+        break;
+    }
+}

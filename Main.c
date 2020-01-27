@@ -607,21 +607,38 @@ void Save()
     fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
     fclose(SaveBlockE);
     // Save Linkedlist
-    struct cell *move = start;
+    struct cell *move = start, *holdNext = NULL;
     FILE *SaveLink = fopen("SAVE\\SavedLink.data", "wb+");
-    int NumberOfCells = count(start);
-    fwrite(&NumberOfCells, sizeof(int), 1, SaveLink);
-    while (move)
+    while (move != NULL)
     {
-        fwrite(move, 1, sizeof(struct cell), SaveLink);
+        holdNext = move->next;
+        move->next = NULL;
+        fseek(SaveLink, 0, SEEK_END);
+        fwrite(move, sizeof(struct cell), 1, SaveLink);
+        move->next = holdNext;
+        holdNext = NULL;
         move = move->next;
     }
     fclose(SaveLink);
-    // Update In map File
+    //Save Map
     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
     fwrite(&n, sizeof(int), 1, SaveMAP);
     fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
     fclose(SaveMAP);
+}
+
+void load()
+{
+    // Load Cells Array
+    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
+    fread(cells, sizeof(char), sizeof(cells), SaveCell);
+    fclose(SaveCell);
+    // Load EnergyBlocks Array
+    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
+    fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+    fclose(SaveBlockE);
+    //Load Linked list
+    
 }
 
 // MAIN FUNCTION

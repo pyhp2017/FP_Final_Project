@@ -372,3 +372,77 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
     return head;
 }
 
+// Function To move cell
+void MoveUP(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup][Ybackup - 1] != 'F' && grid[Xbackup][Ybackup - 1] != 'X' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmp->y = Ybackup - 1;
+            cells[Xbackup][Ybackup - 1] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+    }
+}
+void MovdeDown(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup][Ybackup + 1] != 'F' && grid[Xbackup][Ybackup + 1] != 'X' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        {
+            tmp->y = Ybackup + 1;
+            cells[Xbackup][Ybackup + 1] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveRight(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup + 1][Ybackup] != 'F' && grid[Xbackup + 1][Ybackup] != 'X' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
+        {
+            tmp->x = Xbackup + 1;
+            cells[Xbackup + 1][Ybackup] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveLeft(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup - 1][Ybackup] != 'F' && grid[Xbackup - 1][Ybackup] != 'X' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        {
+            tmp->x = Xbackup - 1;
+            cells[Xbackup - 1][Ybackup] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+

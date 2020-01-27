@@ -246,7 +246,7 @@ void display(struct cell *start)
     struct cell *trace = start;
     while (trace != NULL)
     {
-        printf("\n[%d] %s (%d,%d) - Energy = %d", trace->id, trace->Name, trace->x, trace->y, trace->EnergyCell);
+        printf("\n[%d] %s (%d,%d) - Energy = %d -- BLOCK ENERGY = %d", trace->id, trace->Name, trace->x, trace->y, trace->EnergyCell, EnergyBlocks[trace->x][trace->y]);
         trace = trace->next;
     }
     printf("\n");
@@ -531,6 +531,11 @@ void BoostEnergy(int ChosenCell)
         int Ybackup = tmp->y;
         if (grid[Xbackup][Ybackup] == 'E')
         {
+            if (tmp->EnergyCell == 100)
+            {
+                printf("\nYou Can Not Reach More Energy !\n");
+                return;
+            }
             if (EnergyBlocks[Xbackup][Ybackup] > 15)
             {
                 tmp->EnergyCell += 15;

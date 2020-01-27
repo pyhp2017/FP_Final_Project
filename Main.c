@@ -446,3 +446,35 @@ void MoveLeft(int ChosenCell)
     }
 }
 
+void BoostEnergy(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup][Ybackup] == 'E')
+        {
+            if (EnergyBlocks[Xbackup][Ybackup] > 15)
+            {
+                tmp->EnergyCell += 15;
+                EnergyBlocks[Xbackup][Ybackup] -= 15;
+            }
+            else if (EnergyBlocks[Xbackup][Ybackup] < 15 && EnergyBlocks[Xbackup][Ybackup] >= 0)
+            {
+                int Tahmonda = EnergyBlocks[Xbackup][Ybackup];
+                tmp->EnergyCell += Tahmonda;
+                EnergyBlocks[Xbackup][Ybackup] = 0;
+                grid[Xbackup][Ybackup] = 'N';
+            }
+            else
+            {
+                printf("\nNo More Energy in Here - Empty Storage or Tank\n\n");
+            }
+        }
+        else
+        {
+            printf("\nYou Can Not Boost Energy ON %c \n\n", grid[Xbackup][Ybackup]);
+        }
+    }
+}

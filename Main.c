@@ -689,6 +689,10 @@ void Save()
     fwrite(&n, sizeof(int), 1, SaveMAP);
     fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
     fclose(SaveMAP);
+    //Save CellID
+    FILE *SaveID = fopen("SAVE\\SaveID", "w");
+    fprintf(SaveID, "%d\n", CellID);
+    fclose(SaveID);
 }
 
 // Load Function
@@ -709,7 +713,9 @@ void load()
     fread(&n, sizeof(int), 1, SaveMAP);
     fread(grid, sizeof(char), sizeof(grid), SaveMAP);
     fclose(SaveMAP);
-
+    // Load Cell ID
+    FILE *SaveID = fopen("SAVE\\SaveID", "r");
+    fscanf(SaveID, "%d", &CellID);
     // If it was Signle Player
     SinglePlayer(0);
 }

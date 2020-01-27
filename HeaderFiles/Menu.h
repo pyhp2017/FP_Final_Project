@@ -1,0 +1,27 @@
+void menu()
+{
+    system("cls");
+    system("color a");
+    printf("\n\t\t\t[1] LOAD GAME");
+    printf("\n\t\t\t[2] New Single Player Game");
+    printf("\n\t\t\t[3] New Multi Player Game");
+    printf("\n\t\t\t[4] EXIT");
+    printf("\n\n");
+}
+
+void Menu1()
+{
+    printf("[1] Move\n");
+    printf("[2] Split a cell\n");
+    printf("[3] Boost energy\n");
+    printf("[4] Save\n");
+    printf("[5] Exit\n");
+}
+
+void MenuMove()
+{
+    printf("[1] UP \n");
+    printf("[2] DOWN \n");
+    printf("[3] RIGHT \n");
+    printf("[4] LEFT \n");
+}

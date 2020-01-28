@@ -472,10 +472,10 @@ void MoveUP(int ChosenCell)
     {
         int Xbackup = tmp->x;
         int Ybackup = tmp->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && cells[Xbackup][Ybackup - 1] != 'X' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cells[Xbackup][Ybackup + 1] != 'X' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmp->y = Ybackup - 1;
-            cells[Xbackup][Ybackup - 1] = 'X';
+            tmp->y = Ybackup + 1;
+            cells[Xbackup][Ybackup + 1] = 'X';
             cells[Xbackup][Ybackup] = '\0';
         }
     }
@@ -487,10 +487,10 @@ void MovdeDown(int ChosenCell)
     {
         int Xbackup = tmp->x;
         int Ybackup = tmp->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && cells[Xbackup][Ybackup + 1] != 'X' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cells[Xbackup][Ybackup - 1] != 'X' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
-            tmp->y = Ybackup + 1;
-            cells[Xbackup][Ybackup + 1] = 'X';
+            tmp->y = Ybackup - 1;
+            cells[Xbackup][Ybackup - 1] = 'X';
             cells[Xbackup][Ybackup] = '\0';
         }
         else
@@ -648,9 +648,7 @@ void SinglePlayer(int flag)
             // MOVE
             MenuMove();
             printf("Please choose your option: ");
-            scanf("%d", &movechosen);
-            int movechosen = _getch();
-
+            scanf("%d", &movechosen);            
 
             switch (movechosen)
             {

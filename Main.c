@@ -409,7 +409,7 @@ struct cell *ReadListIn(struct cell *start)
 {
 
     FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "rb");
+    pFile = fopen("SAVE_SINGLE\\SavedLink.data", "rb");
     if (pFile != NULL)
     {
 
@@ -436,7 +436,7 @@ struct cell *ReadListIn(struct cell *start)
 void WriteListToFile(struct cell *start)
 {
     FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "wb+");
+    pFile = fopen("SAVE_SINGLE\\SavedLink.data", "wb+");
     if (pFile != NULL)
     {
         struct cell *currentCar = start;
@@ -692,22 +692,22 @@ void SinglePlayer(int flag)
 void Save()
 {
     // Save Cells Array
-    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "wb+");
+    FILE *SaveCell = fopen("SAVE_SINGLE\\SavedCells.data", "wb+");
     fwrite(cells, sizeof(char), sizeof(cells), SaveCell);
     fclose(SaveCell);
     // Save EnergyBlocks Array
-    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "wb+");
+    FILE *SaveBlockE = fopen("SAVE_SINGLE\\SavedEblock.data", "wb+");
     fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
     fclose(SaveBlockE);
     // Save Linkedlist
     WriteListToFile(start);
     //Save Map
-    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
+    FILE *SaveMAP = fopen("SAVE_SINGLE\\SavedMAP.bin", "wb+");
     fwrite(&n, sizeof(int), 1, SaveMAP);
     fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
     fclose(SaveMAP);
     //Save CellID
-    FILE *SaveID = fopen("SAVE\\SaveID", "w");
+    FILE *SaveID = fopen("SAVE_SINGLE\\SaveID", "w");
     fprintf(SaveID, "%d\n", CellID);
     fclose(SaveID);
 }
@@ -716,22 +716,22 @@ void Save()
 void load()
 {
     // Load Cells Array
-    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
+    FILE *SaveCell = fopen("SAVE_SINGLE\\SavedCells.data", "rb");
     fread(cells, sizeof(char), sizeof(cells), SaveCell);
     fclose(SaveCell);
     // Load EnergyBlocks Array
-    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
+    FILE *SaveBlockE = fopen("SAVE_SINGLE\\SavedEblock.data", "rb");
     fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
     fclose(SaveBlockE);
     //Load Linked list
     start = ReadListIn(start);
     // Load MAP
-    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "rb");
+    FILE *SaveMAP = fopen("SAVE_SINGLE\\SavedMAP.bin", "rb");
     fread(&n, sizeof(int), 1, SaveMAP);
     fread(grid, sizeof(char), sizeof(grid), SaveMAP);
     fclose(SaveMAP);
     // Load Cell ID
-    FILE *SaveID = fopen("SAVE\\SaveID", "r");
+    FILE *SaveID = fopen("SAVE_SINGLE\\SaveID", "r");
     fscanf(SaveID, "%d", &CellID);
     // If it was Signle Player
     SinglePlayer(0);
@@ -746,7 +746,7 @@ int main()
     enum blocks road;
     PutINGride();
     menu();
-    printf("Please Youe Mode: ");
+    printf("Please Select Your Mode: ");
     scanf("%d", &option);
     switch (option)
     {
@@ -773,6 +773,7 @@ int main()
     case 2:
         // Multi Player
         // JUST RUN EXE FILE (REDIRECT)
+        system("start MultiPlayer.exe");
         break;
     case 3:
         //Exit

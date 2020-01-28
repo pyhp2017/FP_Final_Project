@@ -1269,22 +1269,13 @@ int main()
     int flag = 1;
     enum blocks road;
     PutINGride();
-    menu();
-    printf("Please Select an Option: ");
+    menuMulti();
+    printf("Please Select Your Mode: ");
     scanf("%d", &option);
     switch (option)
     {
     case 1:
-        //Load Game code
-        // load();
-        break;
-    case 2:
-        // Single player;
-        // SinglePlayer(1);
-        break;
-    case 3:
-        //Multi player
-         // For first time
+        //New Game
         while (1)
         {
             RoundA(flag);
@@ -1292,7 +1283,12 @@ int main()
             flag = 0;
         }
         break;
-    case 4:
+    case 2:
+        // Load game
+
+        break;
+    case 3:
+        //Exit
         exit(0);
         break;
     }

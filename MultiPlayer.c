@@ -28,7 +28,7 @@ struct cell_A //Struct For cells
     int x, y;
     char Name[32];
     int EnergyCell;
-    struct cell *next;
+    struct cell_A *next;
 };
 struct cell_A *startA = NULL, *tmpA = NULL; //  start is header of linked list
 
@@ -38,7 +38,7 @@ struct cell_B //Struct For cells
     int x, y;
     char Name[32];
     int EnergyCell;
-    struct cell *next;
+    struct cell_B *next;
 };
 struct cell_B *startB = NULL, *tmpB = NULL; //  start is header of linked list
 
@@ -139,7 +139,7 @@ void insert_end_B(int n)
 }
 
 // Insert to the end of linked list when you want split (for one of the cells that dosen't change location)
-void insert_split_witoutrand_A(int n, int x, int y)
+void insert_split_witoutrand_A(int x, int y)
 {
     char *Name;
     struct cell_A *new_node, *ptr;
@@ -173,7 +173,7 @@ void insert_split_witoutrand_A(int n, int x, int y)
         ptr->next = new_node;
     }
 }
-void insert_split_witoutrand_B(int n, int x, int y)
+void insert_split_witoutrand_B(int x, int y)
 {
     char *Name;
     struct cell_B *new_node, *ptr;
@@ -507,7 +507,6 @@ void drawgrid(int n)
             {
                 printf("|   |");
             }
-            
         }
         printf("\x1b[0m");
         printf("\n");
@@ -562,7 +561,7 @@ struct cell_A *RemoveAnyA(struct cell_A *head, struct cell_A *temp)
     }
     if (temp == head)
     {
-        return removeFront(head);
+        return removeFrontA(head);
     }
 
     struct cell_A *move = head;
@@ -592,7 +591,7 @@ struct cell_B *RemoveAnyB(struct cell_B *head, struct cell_B *temp)
     }
     if (temp == head)
     {
-        return removeFront(head);
+        return removeFrontB(head);
     }
 
     struct cell_B *move = head;
@@ -614,166 +613,161 @@ struct cell_B *RemoveAnyB(struct cell_B *head, struct cell_B *temp)
 
     return head;
 }
-
-
 //Functions to Read Linked List from binaryFile
-struct cell_A *ReadNextFromFile(struct cell_A *start, FILE *pFile)
-{
-    size_t returnValue;
-    if (start == NULL)
-    {
-        start = malloc(sizeof(struct cell_A));
-        returnValue = fread(start, sizeof(struct cell_A), 1, pFile);
-        start->next = NULL;
-    }
-    else
-    {
-        struct cell_A *indexCar = start;
-        struct cell_A *newCar = malloc(sizeof(struct cell_A));
-        while (indexCar->next != NULL)
-        {
-            indexCar = indexCar->next;
-        }
-        returnValue = fread(newCar, sizeof(struct cell_A), 1, pFile);
-        indexCar->next = newCar;
-        newCar->next = NULL;
-    }
-    return start;
-}
-struct cell_A *ReadListIn(struct cell_A *start)
-{
+// struct cell_A *ReadNextFromFileA(struct cell_A *start, FILE *pFile)
+// {
+//     size_t returnValue;
+//     if (start == NULL)
+//     {
+//         start = malloc(sizeof(struct cell_A));
+//         returnValue = fread(start, sizeof(struct cell_A), 1, pFile);
+//         start->next = NULL;
+//     }
+//     else
+//     {
+//         struct cell_A *indexCar = start;
+//         struct cell_A *newCar = malloc(sizeof(struct cell_A));
+//         while (indexCar->next != NULL)
+//         {
+//             indexCar = indexCar->next;
+//         }
+//         returnValue = fread(newCar, sizeof(struct cell_A), 1, pFile);
+//         indexCar->next = newCar;
+//         newCar->next = NULL;
+//     }
+//     return start;
+// }
+// struct cell_A *ReadListInA(struct cell_A *start)
+// {
+//     FILE *pFile;
+//     pFile = fopen("SAVE\\SavedLink.data", "rb");
+//     if (pFile != NULL)
+//     {
 
-    FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "rb");
-    if (pFile != NULL)
-    {
+//         start = NULL;
+//         fseek(pFile, 0, SEEK_END);
+//         long fileSize = ftell(pFile);
+//         rewind(pFile);
 
-        start = NULL;
-        fseek(pFile, 0, SEEK_END);
-        long fileSize = ftell(pFile);
-        rewind(pFile);
+//         int numEntries = (int)(fileSize / (sizeof(struct cell_A)));
+//         // printf("numEntries:%d\n",numEntries);
 
-        int numEntries = (int)(fileSize / (sizeof(struct cell_A)));
-        // printf("numEntries:%d\n",numEntries);
+//         int loop = 0;
+//         for (loop = 0; loop < numEntries; ++loop)
+//         {
+//             fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
+//             start = ReadNextFromFile(start, pFile);
+//         }
+//     }
 
-        int loop = 0;
-        for (loop = 0; loop < numEntries; ++loop)
-        {
-            fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
-            start = ReadNextFromFile(start, pFile);
-        }
-    }
+//     return start;
+// }
+// struct cell_B *ReadNextFromFileB(struct cell_B *start, FILE *pFile)
+// {
+//     size_t returnValue;
+//     if (start == NULL)
+//     {
+//         start = malloc(sizeof(struct cell_B));
+//         returnValue = fread(start, sizeof(struct cell_B), 1, pFile);
+//         start->next = NULL;
+//     }
+//     else
+//     {
+//         struct cell_B *indexCar = start;
+//         struct cell_B *newCar = malloc(sizeof(struct cell_B));
+//         while (indexCar->next != NULL)
+//         {
+//             indexCar = indexCar->next;
+//         }
+//         returnValue = fread(newCar, sizeof(struct cell_B), 1, pFile);
+//         indexCar->next = newCar;
+//         newCar->next = NULL;
+//     }
+//     return start;
+// }
+// struct cell_B *ReadListInB(struct cell_B *start)
+// {
 
-    return start;
-}
-struct cell_B *ReadNextFromFile(struct cell_B *start, FILE *pFile)
-{
-    size_t returnValue;
-    if (start == NULL)
-    {
-        start = malloc(sizeof(struct cell_B));
-        returnValue = fread(start, sizeof(struct cell_B), 1, pFile);
-        start->next = NULL;
-    }
-    else
-    {
-        struct cell_B *indexCar = start;
-        struct cell_B *newCar = malloc(sizeof(struct cell_B));
-        while (indexCar->next != NULL)
-        {
-            indexCar = indexCar->next;
-        }
-        returnValue = fread(newCar, sizeof(struct cell_B), 1, pFile);
-        indexCar->next = newCar;
-        newCar->next = NULL;
-    }
-    return start;
-}
-struct cell_B *ReadListIn(struct cell_B *start)
-{
+//     FILE *pFile;
+//     pFile = fopen("SAVE\\SavedLink.data", "rb");
+//     if (pFile != NULL)
+//     {
 
-    FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "rb");
-    if (pFile != NULL)
-    {
+//         start = NULL;
+//         fseek(pFile, 0, SEEK_END);
+//         long fileSize = ftell(pFile);
+//         rewind(pFile);
 
-        start = NULL;
-        fseek(pFile, 0, SEEK_END);
-        long fileSize = ftell(pFile);
-        rewind(pFile);
+//         int numEntries = (int)(fileSize / (sizeof(struct cell_B)));
+//         // printf("numEntries:%d\n",numEntries);
 
-        int numEntries = (int)(fileSize / (sizeof(struct cell_B)));
-        // printf("numEntries:%d\n",numEntries);
+//         int loop = 0;
+//         for (loop = 0; loop < numEntries; ++loop)
+//         {
+//             fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
+//             start = ReadNextFromFile(start, pFile);
+//         }
+//     }
 
-        int loop = 0;
-        for (loop = 0; loop < numEntries; ++loop)
-        {
-            fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
-            start = ReadNextFromFile(start, pFile);
-        }
-    }
-
-    return start;
-}
-
+//     return start;
+// }
 // Function to Write Linked list on binaryFile
-void WriteListToFileA(struct cell_A *start)
-{
-    FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "wb+");
-    if (pFile != NULL)
-    {
-        struct cell_A *currentCar = start;
-        struct cell_A *holdNext = NULL;
-        while (currentCar != NULL)
-        {
-            holdNext = currentCar->next;
-            currentCar->next = NULL;
-            fseek(pFile, 0, SEEK_END);
-            fwrite(currentCar, sizeof(struct cell_A), 1, pFile);
-            currentCar->next = holdNext;
-            holdNext = NULL;
-            currentCar = currentCar->next;
-        }
-        fclose(pFile);
-        pFile = NULL;
-    }
-}
-void WriteListToFileB(struct cell_B *start)
-{
-    FILE *pFile;
-    pFile = fopen("SAVE\\SavedLink.data", "wb+");
-    if (pFile != NULL)
-    {
-        struct cell_B *currentCar = start;
-        struct cell_B *holdNext = NULL;
-        while (currentCar != NULL)
-        {
-            holdNext = currentCar->next;
-            currentCar->next = NULL;
-            fseek(pFile, 0, SEEK_END);
-            fwrite(currentCar, sizeof(struct cell_B), 1, pFile);
-            currentCar->next = holdNext;
-            holdNext = NULL;
-            currentCar = currentCar->next;
-        }
-        fclose(pFile);
-        pFile = NULL;
-    }
-}
-
+// void WriteListToFileA(struct cell_A *start)
+// {
+//     FILE *pFile;
+//     pFile = fopen("SAVE\\SavedLink.data", "wb+");
+//     if (pFile != NULL)
+//     {
+//         struct cell_A *currentCar = start;
+//         struct cell_A *holdNext = NULL;
+//         while (currentCar != NULL)
+//         {
+//             holdNext = currentCar->next;
+//             currentCar->next = NULL;
+//             fseek(pFile, 0, SEEK_END);
+//             fwrite(currentCar, sizeof(struct cell_A), 1, pFile);
+//             currentCar->next = holdNext;
+//             holdNext = NULL;
+//             currentCar = currentCar->next;
+//         }
+//         fclose(pFile);
+//         pFile = NULL;
+//     }
+// }
+// void WriteListToFileB(struct cell_B *start)
+// {
+//     FILE *pFile;
+//     pFile = fopen("SAVE\\SavedLink.data", "wb+");
+//     if (pFile != NULL)
+//     {
+//         struct cell_B *currentCar = start;
+//         struct cell_B *holdNext = NULL;
+//         while (currentCar != NULL)
+//         {
+//             holdNext = currentCar->next;
+//             currentCar->next = NULL;
+//             fseek(pFile, 0, SEEK_END);
+//             fwrite(currentCar, sizeof(struct cell_B), 1, pFile);
+//             currentCar->next = holdNext;
+//             holdNext = NULL;
+//             currentCar = currentCar->next;
+//         }
+//         fclose(pFile);
+//         pFile = NULL;
+//     }
+// }
 
 // Functions To move cell
 void MoveUPA(int ChosenCell)
 {
-    tmpA = search(startA, ChosenCell);
+    tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup-1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
-            tmp->y = Ybackup - 1;
+            tmpA->y = Ybackup - 1;
             cellsA[Xbackup][Ybackup - 1] = 'A';
             cellsA[Xbackup][Ybackup] = '\0';
         }
@@ -781,12 +775,12 @@ void MoveUPA(int ChosenCell)
 }
 void MoveUPB(int ChosenCell)
 {
-    tmpB = search(startB, ChosenCell);
+    tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup-1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
             tmpB->y = Ybackup - 1;
             cellsB[Xbackup][Ybackup - 1] = 'B';
@@ -796,12 +790,12 @@ void MoveUPB(int ChosenCell)
 }
 void MovdeDownA(int ChosenCell)
 {
-    tmpA = search(startA, ChosenCell);
+    tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup +1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmpA->y = Ybackup + 1;
             cellsA[Xbackup][Ybackup + 1] = 'A';
@@ -815,12 +809,12 @@ void MovdeDownA(int ChosenCell)
 }
 void MovdeDownB(int ChosenCell)
 {
-    tmpB = search(startB, ChosenCell);
+    tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup +1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmpB->y = Ybackup + 1;
             cellsB[Xbackup][Ybackup + 1] = 'B';
@@ -834,7 +828,7 @@ void MovdeDownB(int ChosenCell)
 }
 void MoveRightA(int ChosenCell)
 {
-    tmpA = search(startA, ChosenCell);
+    tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
@@ -853,7 +847,7 @@ void MoveRightA(int ChosenCell)
 }
 void MoveRightB(int ChosenCell)
 {
-    tmpB = search(startB, ChosenCell);
+    tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
@@ -872,7 +866,7 @@ void MoveRightB(int ChosenCell)
 }
 void MoveLeftA(int ChosenCell)
 {
-    tmpA = search(startA, ChosenCell);
+    tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
@@ -891,7 +885,7 @@ void MoveLeftA(int ChosenCell)
 }
 void MoveLeftB(int ChosenCell)
 {
-    tmpB = search(startB, ChosenCell);
+    tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
@@ -908,11 +902,10 @@ void MoveLeftB(int ChosenCell)
         }
     }
 }
-
 // Boost Energy in Energy Blocks
 void BoostEnergyA(int ChosenCell)
 {
-    tmpA = search(startA, ChosenCell);
+    tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
@@ -922,7 +915,7 @@ void BoostEnergyA(int ChosenCell)
             if (tmpA->EnergyCell == 100)
             {
                 printf("\nYou Can Not Reach More Energy !\n");
-                sleep(2);
+                // sleep(2);
                 return;
             }
             if (EnergyBlocks[Xbackup][Ybackup] > 15)
@@ -940,7 +933,7 @@ void BoostEnergyA(int ChosenCell)
             else
             {
                 printf("\nNo More Energy in Here - Empty Storage or Tank\n\n");
-                sleep(2);
+                // sleep(2);
             }
         }
         else
@@ -952,7 +945,7 @@ void BoostEnergyA(int ChosenCell)
 }
 void BoostEnergyB(int ChosenCell)
 {
-    tmpB = search(startB, ChosenCell);
+    tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
@@ -992,62 +985,95 @@ void BoostEnergyB(int ChosenCell)
 }
 
 // Split Cell in MITOSIS Blocks
-void SplitCell(int ChosenCell)
+void SplitCellA(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpA = searchA(startA, ChosenCell);
+    if (tmpA != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
-        int idBackup = tmp->id;
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        int idBackup = tmpA->id;
         //Check if Split is possible
         if (grid[Xbackup][Ybackup] == 'M')
         {
             //Split Code
             //check if it's possible to split
-            if (tmp->EnergyCell >= 80)
+            if (tmpA->EnergyCell >= 80)
             {
-                start = RemoveAny(start, tmp);
-                cells[Xbackup][Ybackup] = '\0';
-                insert_split_witoutrand(n, Xbackup, Ybackup);
-                insert_Split_RandAtraf(n, Xbackup, Ybackup);
+                startA = RemoveAnyA(startA, tmpA);
+                cellsA[Xbackup][Ybackup] = '\0';
+                insert_split_witoutrand_A(Xbackup, Ybackup);
+                insert_Split_RandAtraf_A(n, Xbackup, Ybackup);
             }
             else
             {
                 printf("\nYour Fucking Cell Energy is too low !\n\n");
+                sleep(2);
             }
         }
         else
         {
             printf("\nYou Can Not Split ON %c\n\n", grid[Xbackup][Ybackup]);
+            sleep(2);
+        }
+    }
+}
+void SplitCellB(int ChosenCell)
+{
+    tmpB = searchB(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        int idBackup = tmpB->id;
+        //Check if Split is possible
+        if (grid[Xbackup][Ybackup] == 'M')
+        {
+            //Split Code
+            //check if it's possible to split
+            if (tmpB->EnergyCell >= 80)
+            {
+                startB = RemoveAnyB(startB, tmpB);
+                cellsB[Xbackup][Ybackup] = '\0';
+                insert_split_witoutrand_B(Xbackup, Ybackup);
+                insert_Split_RandAtraf_B(n, Xbackup, Ybackup);
+            }
+            else
+            {
+                printf("\nYour Fucking Cell Energy is too low !\n\n");
+                sleep(2);
+            }
+        }
+        else
+        {
+            printf("\nYou Can Not Split ON %c\n\n", grid[Xbackup][Ybackup]);
+            sleep(2);
         }
     }
 }
 
-// Signle Player Function
-void SinglePlayer(int flag)
+void RoundA(int flag)
 {
-    // Single player Mode
     int NumberOfCells;
     int ChosenCell;
     int OptionList2;
     int movechosen;
-
     if (flag == 1)
     {
-        printf("Please Enter Number of Cells: ");
+        printf("Please Enter Number of Cells For PLAYER <A>: ");
         scanf("%d", &NumberOfCells);
         for (int i = 0; i < NumberOfCells; i++)
         {
-            insert_end(n);
+            insert_end_A(n);
         }
+        return;
     }
-
-    while (1)
+    else
     {
         system("cls");
         drawgrid(n);
-        display(start);
+        printf("\n\t PLAYER <A> \n");
+        displayA(startA);
         printf("Please choose one of your cells: ");
         scanf("%d", &ChosenCell);
         Menu1();
@@ -1065,39 +1091,39 @@ void SinglePlayer(int flag)
             {
             case 1:
                 // UP Move
-                MoveUP(ChosenCell);
+                MoveUPA(ChosenCell);
                 break;
 
             case 2:
                 // Down Move
-                MovdeDown(ChosenCell);
+                MovdeDownA(ChosenCell);
                 break;
 
             case 3:
                 // Right
-                MoveRight(ChosenCell);
+                MoveRightA(ChosenCell);
                 break;
 
             case 4:
                 // Left
-                MoveLeft(ChosenCell);
+                MoveLeftA(ChosenCell);
                 break;
             }
             break;
 
         case 2:
             // Split a Cell
-            SplitCell(ChosenCell);
+            SplitCellA(ChosenCell);
             break;
 
         case 3:
             //Boost energy
-            BoostEnergy(ChosenCell);
+            BoostEnergyA(ChosenCell);
             break;
 
         case 4:
             //Save
-            Save();
+            SaveA();
             break;
 
         case 5:
@@ -1107,54 +1133,135 @@ void SinglePlayer(int flag)
     }
 }
 
-//Save Function
-void Save()
+void RoundB(int flag)
 {
-    // Save Cells Array
-    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "wb+");
-    fwrite(cells, sizeof(char), sizeof(cells), SaveCell);
-    fclose(SaveCell);
-    // Save EnergyBlocks Array
-    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "wb+");
-    fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-    fclose(SaveBlockE);
-    // Save Linkedlist
-    WriteListToFile(start);
-    //Save Map
-    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
-    fwrite(&n, sizeof(int), 1, SaveMAP);
-    fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
-    fclose(SaveMAP);
-    //Save CellID
-    FILE *SaveID = fopen("SAVE\\SaveID", "w");
-    fprintf(SaveID, "%d\n", CellID);
-    fclose(SaveID);
+    int NumberOfCells;
+    int ChosenCell;
+    int OptionList2;
+    int movechosen;
+    if (flag == 1)
+    {
+        printf("Please Enter Number of Cells For PLAYER <B>: ");
+        scanf("%d", &NumberOfCells);
+        for (int i = 0; i < NumberOfCells; i++)
+        {
+            insert_end_B(n);
+        }
+        return;
+    }
+    else
+    {
+        system("cls");
+        drawgrid(n);
+        printf("\n\t PLAYER <B> \n");
+        displayB(startB);
+        printf("Please choose one of your cells: ");
+        scanf("%d", &ChosenCell);
+        Menu1();
+        printf("Please choose your option: ");
+        scanf("%d", &OptionList2);
+        switch (OptionList2)
+        {
+        case 1:
+            // MOVE
+            MenuMove();
+            printf("Please choose your option: ");
+            scanf("%d", &movechosen);
+
+            switch (movechosen)
+            {
+            case 1:
+                // UP Move
+                MoveUPB(ChosenCell);
+                break;
+
+            case 2:
+                // Down Move
+                MovdeDownB(ChosenCell);
+                break;
+
+            case 3:
+                // Right
+                MoveRightB(ChosenCell);
+                break;
+
+            case 4:
+                // Left
+                MoveLeftB(ChosenCell);
+                break;
+            }
+            break;
+
+        case 2:
+            // Split a Cell
+            SplitCellB(ChosenCell);
+            break;
+
+        case 3:
+            //Boost energy
+            BoostEnergyB(ChosenCell);
+            break;
+
+        case 4:
+            //Save
+            SaveB();
+            break;
+
+        case 5:
+            exit(0);
+            break;
+        }
+    }
 }
 
-// Load Function
-void load()
-{
-    // Load Cells Array
-    FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
-    fread(cells, sizeof(char), sizeof(cells), SaveCell);
-    fclose(SaveCell);
-    // Load EnergyBlocks Array
-    FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
-    fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-    fclose(SaveBlockE);
-    //Load Linked list
-    start = ReadListIn(start);
-    // Load MAP
-    FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "rb");
-    fread(&n, sizeof(int), 1, SaveMAP);
-    fread(grid, sizeof(char), sizeof(grid), SaveMAP);
-    fclose(SaveMAP);
-    // Load Cell ID
-    FILE *SaveID = fopen("SAVE\\SaveID", "r");
-    fscanf(SaveID, "%d", &CellID);
-    // If it was Signle Player
-    SinglePlayer(0);
-}
+// //Save Function
+// void Save()
+// {
+//     // Save Cells Array
+//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "wb+");
+//     fwrite(cells, sizeof(char), sizeof(cells), SaveCell);
+//     fclose(SaveCell);
+//     // Save EnergyBlocks Array
+//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "wb+");
+//     fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+//     fclose(SaveBlockE);
+//     // Save Linkedlist
+//     WriteListToFile(start);
+//     //Save Map
+//     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
+//     fwrite(&n, sizeof(int), 1, SaveMAP);
+//     fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
+//     fclose(SaveMAP);
+//     //Save CellID
+//     FILE *SaveID = fopen("SAVE\\SaveID", "w");
+//     fprintf(SaveID, "%d\n", CellID);
+//     fclose(SaveID);
+// }
+
+// // Load Function
+// void load()
+// {
+//     // Load Cells Array
+//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
+//     fread(cells, sizeof(char), sizeof(cells), SaveCell);
+//     fclose(SaveCell);
+//     // Load EnergyBlocks Array
+//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
+//     fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+//     fclose(SaveBlockE);
+//     //Load Linked list
+//     start = ReadListIn(start);
+//     // Load MAP
+//     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "rb");
+//     fread(&n, sizeof(int), 1, SaveMAP);
+//     fread(grid, sizeof(char), sizeof(grid), SaveMAP);
+//     fclose(SaveMAP);
+//     // Load Cell ID
+//     FILE *SaveID = fopen("SAVE\\SaveID", "r");
+//     fscanf(SaveID, "%d", &CellID);
+//     // If it was Signle Player
+//     SinglePlayer(0);
+// }
 
 // MAIN FUNCTION
 int main()
@@ -1170,15 +1277,21 @@ int main()
     {
     case 1:
         //Load Game code
-        load();
+        // load();
         break;
     case 2:
         // Single player;
-        SinglePlayer(1);
+        // SinglePlayer(1);
         break;
     case 3:
         //Multi player
-
+        int flag = 1; // For first time
+        while (1)
+        {
+            RoundA(flag);
+            RoundB(flag);
+            flag = 0;
+        }
         break;
     case 4:
         exit(0);

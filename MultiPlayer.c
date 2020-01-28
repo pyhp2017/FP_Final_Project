@@ -112,7 +112,7 @@ void insert_end_B(int n)
             // Put single cell in grid
             x = xrand;
             y = yrand;
-            cellsB[x][y] = 'A';
+            cellsB[x][y] = 'B';
             break;
         }
     }
@@ -173,7 +173,40 @@ void insert_split_witoutrand_A(int n, int x, int y)
         ptr->next = new_node;
     }
 }
-
+void insert_split_witoutrand_B(int n, int x, int y)
+{
+    char *Name;
+    struct cell_B *new_node, *ptr;
+    new_node = (struct cell_B *)malloc(sizeof(struct cell_B));
+    if (new_node == NULL)
+    {
+        printf("error in memory allocation !");
+        exit(-1);
+    }
+    //Ejad name , x , y random , chidan in koskesh ha dar naghsa
+    Name = rand_string(5);
+    new_node->id = CellID_B;
+    CellID_B++;
+    strcpy(new_node->Name, Name);
+    cellsB[x][y] = 'B';
+    new_node->x = x;
+    new_node->y = y;
+    new_node->EnergyCell = 40;
+    new_node->next = NULL;
+    if (startB == NULL) // FIrst time
+    {
+        startB = new_node;
+    }
+    else
+    {
+        ptr = startB;
+        while (ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = new_node;
+    }
+}
 
 
 // Insert to the end of the linked list when you want to split with random location around that cell

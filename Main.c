@@ -534,6 +534,7 @@ void BoostEnergy(int ChosenCell)
             if (tmp->EnergyCell == 100)
             {
                 printf("\nYou Can Not Reach More Energy !\n");
+                sleep(2);
                 return;
             }
             if (EnergyBlocks[Xbackup][Ybackup] > 15)
@@ -551,11 +552,13 @@ void BoostEnergy(int ChosenCell)
             else
             {
                 printf("\nNo More Energy in Here - Empty Storage or Tank\n\n");
+                sleep(2);
             }
         }
         else
         {
             printf("\nYou Can Not Boost Energy ON %c \n\n", grid[Xbackup][Ybackup]);
+            sleep(2);
         }
     }
 }

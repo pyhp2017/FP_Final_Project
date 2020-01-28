@@ -614,148 +614,147 @@ struct cell_B *RemoveAnyB(struct cell_B *head, struct cell_B *temp)
     return head;
 }
 //Functions to Read Linked List from binaryFile
-// struct cell_A *ReadNextFromFileA(struct cell_A *start, FILE *pFile)
-// {
-//     size_t returnValue;
-//     if (start == NULL)
-//     {
-//         start = malloc(sizeof(struct cell_A));
-//         returnValue = fread(start, sizeof(struct cell_A), 1, pFile);
-//         start->next = NULL;
-//     }
-//     else
-//     {
-//         struct cell_A *indexCar = start;
-//         struct cell_A *newCar = malloc(sizeof(struct cell_A));
-//         while (indexCar->next != NULL)
-//         {
-//             indexCar = indexCar->next;
-//         }
-//         returnValue = fread(newCar, sizeof(struct cell_A), 1, pFile);
-//         indexCar->next = newCar;
-//         newCar->next = NULL;
-//     }
-//     return start;
-// }
-// struct cell_A *ReadListInA(struct cell_A *start)
-// {
-//     FILE *pFile;
-//     pFile = fopen("SAVE\\SavedLink.data", "rb");
-//     if (pFile != NULL)
-//     {
+struct cell_A *ReadNextFromFileA(struct cell_A *start, FILE *pFile)
+{
+    size_t returnValue;
+    if (start == NULL)
+    {
+        start = malloc(sizeof(struct cell_A));
+        returnValue = fread(start, sizeof(struct cell_A), 1, pFile);
+        start->next = NULL;
+    }
+    else
+    {
+        struct cell_A *indexCar = start;
+        struct cell_A *newCar = malloc(sizeof(struct cell_A));
+        while (indexCar->next != NULL)
+        {
+            indexCar = indexCar->next;
+        }
+        returnValue = fread(newCar, sizeof(struct cell_A), 1, pFile);
+        indexCar->next = newCar;
+        newCar->next = NULL;
+    }
+    return start;
+}
+struct cell_A *ReadListInA(struct cell_A *start)
+{
+    FILE *pFile;
+    pFile = fopen("SAVE_MULTI\\SavedLinkB.data", "rb");
+    if (pFile != NULL)
+    {
 
-//         start = NULL;
-//         fseek(pFile, 0, SEEK_END);
-//         long fileSize = ftell(pFile);
-//         rewind(pFile);
+        start = NULL;
+        fseek(pFile, 0, SEEK_END);
+        long fileSize = ftell(pFile);
+        rewind(pFile);
 
-//         int numEntries = (int)(fileSize / (sizeof(struct cell_A)));
-//         // printf("numEntries:%d\n",numEntries);
+        int numEntries = (int)(fileSize / (sizeof(struct cell_A)));
+        // printf("numEntries:%d\n",numEntries);
 
-//         int loop = 0;
-//         for (loop = 0; loop < numEntries; ++loop)
-//         {
-//             fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
-//             start = ReadNextFromFile(start, pFile);
-//         }
-//     }
+        int loop = 0;
+        for (loop = 0; loop < numEntries; ++loop)
+        {
+            fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
+            start = ReadNextFromFile(start, pFile);
+        }
+    }
 
-//     return start;
-// }
-// struct cell_B *ReadNextFromFileB(struct cell_B *start, FILE *pFile)
-// {
-//     size_t returnValue;
-//     if (start == NULL)
-//     {
-//         start = malloc(sizeof(struct cell_B));
-//         returnValue = fread(start, sizeof(struct cell_B), 1, pFile);
-//         start->next = NULL;
-//     }
-//     else
-//     {
-//         struct cell_B *indexCar = start;
-//         struct cell_B *newCar = malloc(sizeof(struct cell_B));
-//         while (indexCar->next != NULL)
-//         {
-//             indexCar = indexCar->next;
-//         }
-//         returnValue = fread(newCar, sizeof(struct cell_B), 1, pFile);
-//         indexCar->next = newCar;
-//         newCar->next = NULL;
-//     }
-//     return start;
-// }
-// struct cell_B *ReadListInB(struct cell_B *start)
-// {
+    return start;
+}
+struct cell_B *ReadNextFromFileB(struct cell_B *start, FILE *pFile)
+{
+    size_t returnValue;
+    if (start == NULL)
+    {
+        start = malloc(sizeof(struct cell_B));
+        returnValue = fread(start, sizeof(struct cell_B), 1, pFile);
+        start->next = NULL;
+    }
+    else
+    {
+        struct cell_B *indexCar = start;
+        struct cell_B *newCar = malloc(sizeof(struct cell_B));
+        while (indexCar->next != NULL)
+        {
+            indexCar = indexCar->next;
+        }
+        returnValue = fread(newCar, sizeof(struct cell_B), 1, pFile);
+        indexCar->next = newCar;
+        newCar->next = NULL;
+    }
+    return start;
+}
+struct cell_B *ReadListInB(struct cell_B *start)
+{
 
-//     FILE *pFile;
-//     pFile = fopen("SAVE\\SavedLink.data", "rb");
-//     if (pFile != NULL)
-//     {
+    FILE *pFile;
+    pFile = fopen("SAVE_MULTI\\SavedLinkB.data", "rb");
+    if (pFile != NULL)
+    {
+        start = NULL;
+        fseek(pFile, 0, SEEK_END);
+        long fileSize = ftell(pFile);
+        rewind(pFile);
 
-//         start = NULL;
-//         fseek(pFile, 0, SEEK_END);
-//         long fileSize = ftell(pFile);
-//         rewind(pFile);
+        int numEntries = (int)(fileSize / (sizeof(struct cell_B)));
+        // printf("numEntries:%d\n",numEntries);
 
-//         int numEntries = (int)(fileSize / (sizeof(struct cell_B)));
-//         // printf("numEntries:%d\n",numEntries);
+        int loop = 0;
+        for (loop = 0; loop < numEntries; ++loop)
+        {
+            fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
+            start = ReadNextFromFile(start, pFile);
+        }
+    }
 
-//         int loop = 0;
-//         for (loop = 0; loop < numEntries; ++loop)
-//         {
-//             fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
-//             start = ReadNextFromFile(start, pFile);
-//         }
-//     }
-
-//     return start;
-// }
+    return start;
+}
 // Function to Write Linked list on binaryFile
-// void WriteListToFileA(struct cell_A *start)
-// {
-//     FILE *pFile;
-//     pFile = fopen("SAVE\\SavedLink.data", "wb+");
-//     if (pFile != NULL)
-//     {
-//         struct cell_A *currentCar = start;
-//         struct cell_A *holdNext = NULL;
-//         while (currentCar != NULL)
-//         {
-//             holdNext = currentCar->next;
-//             currentCar->next = NULL;
-//             fseek(pFile, 0, SEEK_END);
-//             fwrite(currentCar, sizeof(struct cell_A), 1, pFile);
-//             currentCar->next = holdNext;
-//             holdNext = NULL;
-//             currentCar = currentCar->next;
-//         }
-//         fclose(pFile);
-//         pFile = NULL;
-//     }
-// }
-// void WriteListToFileB(struct cell_B *start)
-// {
-//     FILE *pFile;
-//     pFile = fopen("SAVE\\SavedLink.data", "wb+");
-//     if (pFile != NULL)
-//     {
-//         struct cell_B *currentCar = start;
-//         struct cell_B *holdNext = NULL;
-//         while (currentCar != NULL)
-//         {
-//             holdNext = currentCar->next;
-//             currentCar->next = NULL;
-//             fseek(pFile, 0, SEEK_END);
-//             fwrite(currentCar, sizeof(struct cell_B), 1, pFile);
-//             currentCar->next = holdNext;
-//             holdNext = NULL;
-//             currentCar = currentCar->next;
-//         }
-//         fclose(pFile);
-//         pFile = NULL;
-//     }
-// }
+void WriteListToFileA(struct cell_A *start)
+{
+    FILE *pFile;
+    pFile = fopen("SAVE_MULTI\\SavedLinkA.data", "wb+");
+    if (pFile != NULL)
+    {
+        struct cell_A *currentCar = start;
+        struct cell_A *holdNext = NULL;
+        while (currentCar != NULL)
+        {
+            holdNext = currentCar->next;
+            currentCar->next = NULL;
+            fseek(pFile, 0, SEEK_END);
+            fwrite(currentCar, sizeof(struct cell_A), 1, pFile);
+            currentCar->next = holdNext;
+            holdNext = NULL;
+            currentCar = currentCar->next;
+        }
+        fclose(pFile);
+        pFile = NULL;
+    }
+}
+void WriteListToFileB(struct cell_B *start)
+{
+    FILE *pFile;
+    pFile = fopen("SAVE_MULTI\\SavedLinkB.data", "wb+");
+    if (pFile != NULL)
+    {
+        struct cell_B *currentCar = start;
+        struct cell_B *holdNext = NULL;
+        while (currentCar != NULL)
+        {
+            holdNext = currentCar->next;
+            currentCar->next = NULL;
+            fseek(pFile, 0, SEEK_END);
+            fwrite(currentCar, sizeof(struct cell_B), 1, pFile);
+            currentCar->next = holdNext;
+            holdNext = NULL;
+            currentCar = currentCar->next;
+        }
+        fclose(pFile);
+        pFile = NULL;
+    }
+}
 
 // Functions To move cell
 void MoveUPA(int ChosenCell)
@@ -1213,28 +1212,39 @@ void RoundB(int flag)
 }
 
 // //Save Function
-// void Save()
-// {
-//     // Save Cells Array
-//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "wb+");
-//     fwrite(cells, sizeof(char), sizeof(cells), SaveCell);
-//     fclose(SaveCell);
-//     // Save EnergyBlocks Array
-//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "wb+");
-//     fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-//     fclose(SaveBlockE);
-//     // Save Linkedlist
-//     WriteListToFile(start);
-//     //Save Map
-//     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "wb+");
-//     fwrite(&n, sizeof(int), 1, SaveMAP);
-//     fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
-//     fclose(SaveMAP);
-//     //Save CellID
-//     FILE *SaveID = fopen("SAVE\\SaveID", "w");
-//     fprintf(SaveID, "%d\n", CellID);
-//     fclose(SaveID);
-// }
+void Save()
+{
+    // Save Cells Array
+    // For CellsA
+    FILE *SaveCellA = fopen("SAVE_MULTI\\SavedCellsA.data", "wb+");
+    fwrite(cellsA, sizeof(char), sizeof(cellsA), SaveCellA);
+    fclose(SaveCellA);
+    // For CellsB
+    FILE *SaveCellB = fopen("SAVE_MULTI\\SavedCellsB.data", "wb+");
+    fwrite(cellsB, sizeof(char), sizeof(cellsB), SaveCellB);
+    fclose(SaveCellB);
+    // Save EnergyBlocks Array
+    FILE *SaveBlockE = fopen("SAVE_MULTI\\SavedEblock.data", "wb+");
+    fwrite(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+    fclose(SaveBlockE);
+    // Save Linkedlist
+    WriteListToFileA(startA);
+    WriteListToFileB(startB);
+    //Save Map
+    FILE *SaveMAP = fopen("SAVE_MULTI\\SavedMAP.bin", "wb+");
+    fwrite(&n, sizeof(int), 1, SaveMAP);
+    fwrite(grid, sizeof(char), sizeof(grid), SaveMAP);
+    fclose(SaveMAP);
+    //Save CellID
+    // Cell ID A
+    FILE *SaveIDA = fopen("SAVE_MULTI\\SaveIDA", "w");
+    fprintf(SaveIDA, "%d\n", CellID_A);
+    fclose(SaveIDA);
+    // Cell ID B
+    FILE *SaveIDB = fopen("SAVE_MULTI\\SaveIDB", "w");
+    fprintf(SaveIDB, "%d\n", CellID_B);
+    fclose(SaveIDB);
+}
 
 // // Load Function
 // void load()

@@ -2,10 +2,32 @@ void menu()
 {
     system("cls");
     system("color a");
-    printf("\n\t\t\t[1] LOAD GAME");
-    printf("\n\t\t\t[2] New Single Player Game");
-    printf("\n\t\t\t[3] New Multi Player Game");
-    printf("\n\t\t\t[4] EXIT");
+    printf("\n\t\t\t WELCOME ... Coded By AHMAD FOROUGHI");
+    printf("\n\t\t\t[1] Single Player Game");
+    printf("\n\t\t\t[2] Multi Player Game");
+    printf("\n\t\t\t[3] EXIT");
+    printf("\n\n");
+}
+
+void menuSingle()
+{
+    system("cls");
+    system("color a");
+    printf("\n\t\t\t SINGLE PLAYER GAME");
+    printf("\n\t\t\t[1] NEW Game");
+    printf("\n\t\t\t[2] LOAD GAME");
+    printf("\n\t\t\t[3] EXIT");
+    printf("\n\n");
+}
+
+void menuMulti()
+{
+    system("cls");
+    system("color a");
+    printf("\n\t\t\t MULTI PLAYER GAME");
+    printf("\n\t\t\t[1] NEW Game");
+    printf("\n\t\t\t[2] LOAD GAME");
+    printf("\n\t\t\t[3] EXIT");
     printf("\n\n");
 }
 

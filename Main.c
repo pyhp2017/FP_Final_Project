@@ -742,26 +742,40 @@ int main()
 {
     srand(time(0));
     int option;
+    int OptionList2;
     enum blocks road;
     PutINGride();
     menu();
-    printf("Please Select an Option: ");
+    printf("Please Youe Mode: ");
     scanf("%d", &option);
     switch (option)
     {
     case 1:
-        //Load Game code
-        load();
+        //Single Player
+        menuSingle();
+        printf("Please Select Your Mode: ");
+        scanf("%d" , &OptionList2);
+        switch (OptionList2)
+        {
+        case 1:
+            // New Game
+            SinglePlayer(1);
+            break;
+        case 2:
+            // Load Old game
+            load();
+            break;
+        case 3:
+            exit(0);
+            break;
+        }
         break;
     case 2:
-        // Single player;
-        SinglePlayer(1);
+        // Multi Player
+        // JUST RUN EXE FILE (REDIRECT)
         break;
     case 3:
-        //Multi player
-
-        break;
-    case 4:
+        //Exit
         exit(0);
         break;
     }

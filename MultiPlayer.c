@@ -717,20 +717,42 @@ struct cell_B *ReadListIn(struct cell_B *start)
 }
 
 // Function to Write Linked list on binaryFile
-void WriteListToFile(struct cell *start)
+void WriteListToFileA(struct cell_A *start)
 {
     FILE *pFile;
     pFile = fopen("SAVE\\SavedLink.data", "wb+");
     if (pFile != NULL)
     {
-        struct cell *currentCar = start;
-        struct cell *holdNext = NULL;
+        struct cell_A *currentCar = start;
+        struct cell_A *holdNext = NULL;
         while (currentCar != NULL)
         {
             holdNext = currentCar->next;
             currentCar->next = NULL;
             fseek(pFile, 0, SEEK_END);
-            fwrite(currentCar, sizeof(struct cell), 1, pFile);
+            fwrite(currentCar, sizeof(struct cell_A), 1, pFile);
+            currentCar->next = holdNext;
+            holdNext = NULL;
+            currentCar = currentCar->next;
+        }
+        fclose(pFile);
+        pFile = NULL;
+    }
+}
+void WriteListToFileB(struct cell_B *start)
+{
+    FILE *pFile;
+    pFile = fopen("SAVE\\SavedLink.data", "wb+");
+    if (pFile != NULL)
+    {
+        struct cell_B *currentCar = start;
+        struct cell_B *holdNext = NULL;
+        while (currentCar != NULL)
+        {
+            holdNext = currentCar->next;
+            currentCar->next = NULL;
+            fseek(pFile, 0, SEEK_END);
+            fwrite(currentCar, sizeof(struct cell_B), 1, pFile);
             currentCar->next = holdNext;
             holdNext = NULL;
             currentCar = currentCar->next;
@@ -740,19 +762,35 @@ void WriteListToFile(struct cell *start)
     }
 }
 
-// Function To move cell
-void MoveUP(int ChosenCell)
+
+// Functions To move cell
+void MoveUPA(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpA = search(startA, ChosenCell);
+    if (tmpA != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && grid[Xbackup][Ybackup - 1] != 'X' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup-1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
             tmp->y = Ybackup - 1;
-            cells[Xbackup][Ybackup - 1] = 'X';
-            cells[Xbackup][Ybackup] = '\0';
+            cellsA[Xbackup][Ybackup - 1] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
+        }
+    }
+}
+void MoveUPB(int ChosenCell)
+{
+    tmpB = search(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup-1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmpB->y = Ybackup - 1;
+            cellsB[Xbackup][Ybackup - 1] = 'A';
+            cellsB[Xbackup][Ybackup] = '\0';
         }
     }
 }

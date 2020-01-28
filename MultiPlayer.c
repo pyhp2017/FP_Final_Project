@@ -939,7 +939,7 @@ void BoostEnergyA(int ChosenCell)
         else
         {
             printf("\nYou Can Not Boost Energy ON %c \n\n", grid[Xbackup][Ybackup]);
-            sleep(2);
+            // sleep(2);
         }
     }
 }
@@ -955,7 +955,7 @@ void BoostEnergyB(int ChosenCell)
             if (tmpB->EnergyCell == 100)
             {
                 printf("\nYou Can Not Reach More Energy !\n");
-                sleep(2);
+                // sleep(2);
                 return;
             }
             if (EnergyBlocks[Xbackup][Ybackup] > 15)
@@ -973,7 +973,7 @@ void BoostEnergyB(int ChosenCell)
             else
             {
                 printf("\nNo More Energy in Here - Empty Storage or Tank\n\n");
-                sleep(2);
+                // sleep(2);
             }
         }
         else
@@ -992,7 +992,6 @@ void SplitCellA(int ChosenCell)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        int idBackup = tmpA->id;
         //Check if Split is possible
         if (grid[Xbackup][Ybackup] == 'M')
         {
@@ -1008,13 +1007,13 @@ void SplitCellA(int ChosenCell)
             else
             {
                 printf("\nYour Fucking Cell Energy is too low !\n\n");
-                sleep(2);
+                // sleep(2);
             }
         }
         else
         {
             printf("\nYou Can Not Split ON %c\n\n", grid[Xbackup][Ybackup]);
-            sleep(2);
+            // sleep(2);
         }
     }
 }
@@ -1025,7 +1024,6 @@ void SplitCellB(int ChosenCell)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        int idBackup = tmpB->id;
         //Check if Split is possible
         if (grid[Xbackup][Ybackup] == 'M')
         {
@@ -1041,13 +1039,13 @@ void SplitCellB(int ChosenCell)
             else
             {
                 printf("\nYour Fucking Cell Energy is too low !\n\n");
-                sleep(2);
+                // sleep(2);
             }
         }
         else
         {
             printf("\nYou Can Not Split ON %c\n\n", grid[Xbackup][Ybackup]);
-            sleep(2);
+            // sleep(2);
         }
     }
 }
@@ -1123,7 +1121,7 @@ void RoundA(int flag)
 
         case 4:
             //Save
-            SaveA();
+            // SaveA();
             break;
 
         case 5:
@@ -1204,7 +1202,7 @@ void RoundB(int flag)
 
         case 4:
             //Save
-            SaveB();
+            // SaveB();
             break;
 
         case 5:
@@ -1268,6 +1266,7 @@ int main()
 {
     srand(time(0));
     int option;
+    int flag = 1;
     enum blocks road;
     PutINGride();
     menu();
@@ -1285,7 +1284,7 @@ int main()
         break;
     case 3:
         //Multi player
-        int flag = 1; // For first time
+         // For first time
         while (1)
         {
             RoundA(flag);

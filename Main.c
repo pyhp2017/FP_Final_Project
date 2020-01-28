@@ -286,7 +286,7 @@ void drawgrid(int n)
     }
     printf("\n");
 
-    for (int j = 0; j < n; j++)
+    for (int j = n-1; j>=0; j--)
     {
         printf("   ");
         for (int z = 0; z < n; z++)

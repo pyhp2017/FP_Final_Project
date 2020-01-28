@@ -310,7 +310,16 @@ void drawgrid(int n)
                 printf("\x1b[0m");
             }
 
-            printf("| %c |", cells[i][j]);
+            if (cells[i][j] == 'X')
+            {
+                printf("| %c |", cells[i][j]);
+            }
+            else
+            {
+                printf("|   |");
+            }
+            
+            
         }
         printf("\x1b[0m");
         printf("\n");

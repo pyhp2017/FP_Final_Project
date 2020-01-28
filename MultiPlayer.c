@@ -208,14 +208,13 @@ void insert_split_witoutrand_B(int n, int x, int y)
     }
 }
 
-
 // Insert to the end of the linked list when you want to split with random location around that cell
-void insert_Split_RandAtraf(int n, int x, int y)
+void insert_Split_RandAtraf_A(int n, int x, int y)
 {
     char *Name;
     int xfinal, yfinal, xrand, yrand;
-    struct cell *new_node, *ptr;
-    new_node = (struct cell *)malloc(sizeof(struct cell));
+    struct cell_A *new_node, *ptr;
+    new_node = (struct cell_A *)malloc(sizeof(struct cell_A));
     if (new_node == NULL)
     {
         printf("error in memory allocation !");
@@ -233,11 +232,11 @@ void insert_Split_RandAtraf(int n, int x, int y)
         }
         int X1 = x + xrand;
         int Y1 = y + yrand;
-        if (X1 >= 0 && X1 < n && Y1 >= 0 && Y1 < n && grid[X1][Y1] != 'F' && cells[X1][Y1] != 'X')
+        if (X1 >= 0 && X1 < n && Y1 >= 0 && Y1 < n && grid[X1][Y1] != 'F' && cellsA[X1][Y1] != 'A' && cellsB[X1][Y1] != 'B')
         {
             xfinal = X1;
             yfinal = Y1;
-            cells[X1][Y1] = 'X';
+            cellsA[X1][Y1] = 'A';
             break;
         }
         else
@@ -245,20 +244,76 @@ void insert_Split_RandAtraf(int n, int x, int y)
             continue;
         }
     }
-    new_node->id = CellID;
-    CellID++;
+    new_node->id = CellID_A;
+    CellID_A++;
     strcpy(new_node->Name, Name);
     new_node->x = xfinal;
     new_node->y = yfinal;
     new_node->EnergyCell = 40;
     new_node->next = NULL;
-    if (start == NULL) // FIrst time
+    if (startA == NULL) // FIrst time
     {
-        start = new_node;
+        startA = new_node;
     }
     else
     {
-        ptr = start;
+        ptr = startA;
+        while (ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = new_node;
+    }
+}
+void insert_Split_RandAtraf_B(int n, int x, int y)
+{
+    char *Name;
+    int xfinal, yfinal, xrand, yrand;
+    struct cell_B *new_node, *ptr;
+    new_node = (struct cell_B *)malloc(sizeof(struct cell_B));
+    if (new_node == NULL)
+    {
+        printf("error in memory allocation !");
+        exit(-1);
+    }
+    //Ejad name , x , y random , chidan in koskesh ha dar naghsa
+    Name = rand_string(5);
+    while (1)
+    {
+        xrand = (rand() % 3) - 1;
+        yrand = (rand() % 3) - 1;
+        if (xrand == 0 || yrand == 0)
+        {
+            continue;
+        }
+        int X1 = x + xrand;
+        int Y1 = y + yrand;
+        if (X1 >= 0 && X1 < n && Y1 >= 0 && Y1 < n && grid[X1][Y1] != 'F' && cellsA[X1][Y1] != 'A' && cellsB[X1][Y1] != 'B')
+        {
+            xfinal = X1;
+            yfinal = Y1;
+            cellsB[X1][Y1] = 'B';
+            break;
+        }
+        else
+        {
+            continue;
+        }
+    }
+    new_node->id = CellID_B;
+    CellID_B++;
+    strcpy(new_node->Name, Name);
+    new_node->x = xfinal;
+    new_node->y = yfinal;
+    new_node->EnergyCell = 40;
+    new_node->next = NULL;
+    if (startB == NULL) // FIrst time
+    {
+        startB = new_node;
+    }
+    else
+    {
+        ptr = startB;
         while (ptr->next != NULL)
         {
             ptr = ptr->next;
@@ -314,10 +369,21 @@ void PutINGride()
 }
 
 // Count Linked list Nodes
-int count(struct cell *start)
+int countA(struct cell_A *start)
 {
     int count;
-    struct cell *trace = start;
+    struct cell_A *trace = start;
+    while (trace != NULL)
+    {
+        count++;
+        trace = trace->next;
+    }
+    return count;
+}
+int countB(struct cell_B *start)
+{
+    int count;
+    struct cell_B *trace = start;
     while (trace != NULL)
     {
         count++;
@@ -336,9 +402,19 @@ void swap(int *X, int *Y)
 }
 
 // Display Linked list Nodes
-void display(struct cell *start)
+void displayA(struct cell_A *start)
 {
-    struct cell *trace = start;
+    struct cell_A *trace = start;
+    while (trace != NULL)
+    {
+        printf("\n[%d] %s (%d,%d) - Energy = %d -- BLOCK ENERGY = %d", trace->id, trace->Name, trace->x, trace->y, trace->EnergyCell, EnergyBlocks[trace->x][trace->y]);
+        trace = trace->next;
+    }
+    printf("\n");
+}
+void displayB(struct cell_B *start)
+{
+    struct cell_B *trace = start;
     while (trace != NULL)
     {
         printf("\n[%d] %s (%d,%d) - Energy = %d -- BLOCK ENERGY = %d", trace->id, trace->Name, trace->x, trace->y, trace->EnergyCell, EnergyBlocks[trace->x][trace->y]);
@@ -348,9 +424,23 @@ void display(struct cell *start)
 }
 
 // Find and Return a Node in Linked List
-struct cell *search(struct cell *begin, int id)
+struct cell_A *searchA(struct cell_A *begin, int id)
 {
-    struct cell *move = begin;
+    struct cell_A *move = begin;
+    while (move != NULL)
+    {
+        if (move->id == id)
+        {
+            return move;
+        }
+
+        move = move->next;
+    }
+    return NULL;
+}
+struct cell_B *searchB(struct cell_B *begin, int id)
+{
+    struct cell_B *move = begin;
     while (move != NULL)
     {
         if (move->id == id)
@@ -404,8 +494,20 @@ void drawgrid(int n)
             {
                 printf("\x1b[0m");
             }
-
-            printf("| %c |", cells[i][j]);
+            if (cellsA[i][j] == 'A')
+            {
+                /* code */
+                printf("| %c |", cellsA[i][j]);
+            }
+            else if (cellsB[i][j] == 'B')
+            {
+                printf("| %c |", cellsB[i][j]);
+            }
+            else
+            {
+                printf("|   |");
+            }
+            
         }
         printf("\x1b[0m");
         printf("\n");
@@ -420,13 +522,13 @@ void drawgrid(int n)
 
 // Functions to Remove a Node
 // Remove Front is for remove first node
-struct cell *removeFront(struct cell *A)
+struct cell_A *removeFrontA(struct cell_A *A)
 {
     if (A == NULL)
     {
         return NULL;
     }
-    struct cell *front = A;
+    struct cell_A *front = A;
     A = A->next;
     front->next = NULL;
     if (A == front)
@@ -436,7 +538,23 @@ struct cell *removeFront(struct cell *A)
     free(front);
     return A;
 }
-struct cell *RemoveAny(struct cell *head, struct cell *temp)
+struct cell_B *removeFrontB(struct cell_B *A)
+{
+    if (A == NULL)
+    {
+        return NULL;
+    }
+    struct cell_B *front = A;
+    A = A->next;
+    front->next = NULL;
+    if (A == front)
+    {
+        A = NULL;
+    }
+    free(front);
+    return A;
+}
+struct cell_A *RemoveAnyA(struct cell_A *head, struct cell_A *temp)
 {
     if (temp == NULL)
     {
@@ -447,7 +565,7 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
         return removeFront(head);
     }
 
-    struct cell *move = head;
+    struct cell_A *move = head;
     while (move != NULL)
     {
         if (move->next == temp)
@@ -458,7 +576,37 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
     }
     if (move != NULL)
     {
-        struct cell *Movagat = move->next;
+        struct cell_A *Movagat = move->next;
+        move->next = Movagat->next;
+        Movagat->next = NULL;
+        free(Movagat);
+    }
+
+    return head;
+}
+struct cell_B *RemoveAnyB(struct cell_B *head, struct cell_B *temp)
+{
+    if (temp == NULL)
+    {
+        return NULL;
+    }
+    if (temp == head)
+    {
+        return removeFront(head);
+    }
+
+    struct cell_B *move = head;
+    while (move != NULL)
+    {
+        if (move->next == temp)
+        {
+            break;
+        }
+        move = move->next;
+    }
+    if (move != NULL)
+    {
+        struct cell_B *Movagat = move->next;
         move->next = Movagat->next;
         Movagat->next = NULL;
         free(Movagat);
@@ -467,31 +615,32 @@ struct cell *RemoveAny(struct cell *head, struct cell *temp)
     return head;
 }
 
+
 //Functions to Read Linked List from binaryFile
-struct cell *ReadNextFromFile(struct cell *start, FILE *pFile)
+struct cell_A *ReadNextFromFile(struct cell_A *start, FILE *pFile)
 {
     size_t returnValue;
     if (start == NULL)
     {
-        start = malloc(sizeof(struct cell));
-        returnValue = fread(start, sizeof(struct cell), 1, pFile);
+        start = malloc(sizeof(struct cell_A));
+        returnValue = fread(start, sizeof(struct cell_A), 1, pFile);
         start->next = NULL;
     }
     else
     {
-        struct cell *indexCar = start;
-        struct cell *newCar = malloc(sizeof(struct cell));
+        struct cell_A *indexCar = start;
+        struct cell_A *newCar = malloc(sizeof(struct cell_A));
         while (indexCar->next != NULL)
         {
             indexCar = indexCar->next;
         }
-        returnValue = fread(newCar, sizeof(struct cell), 1, pFile);
+        returnValue = fread(newCar, sizeof(struct cell_A), 1, pFile);
         indexCar->next = newCar;
         newCar->next = NULL;
     }
     return start;
 }
-struct cell *ReadListIn(struct cell *start)
+struct cell_A *ReadListIn(struct cell_A *start)
 {
 
     FILE *pFile;
@@ -504,13 +653,62 @@ struct cell *ReadListIn(struct cell *start)
         long fileSize = ftell(pFile);
         rewind(pFile);
 
-        int numEntries = (int)(fileSize / (sizeof(struct cell)));
+        int numEntries = (int)(fileSize / (sizeof(struct cell_A)));
         // printf("numEntries:%d\n",numEntries);
 
         int loop = 0;
         for (loop = 0; loop < numEntries; ++loop)
         {
-            fseek(pFile, (sizeof(struct cell) * loop), SEEK_SET);
+            fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
+            start = ReadNextFromFile(start, pFile);
+        }
+    }
+
+    return start;
+}
+struct cell_B *ReadNextFromFile(struct cell_B *start, FILE *pFile)
+{
+    size_t returnValue;
+    if (start == NULL)
+    {
+        start = malloc(sizeof(struct cell_B));
+        returnValue = fread(start, sizeof(struct cell_B), 1, pFile);
+        start->next = NULL;
+    }
+    else
+    {
+        struct cell_B *indexCar = start;
+        struct cell_B *newCar = malloc(sizeof(struct cell_B));
+        while (indexCar->next != NULL)
+        {
+            indexCar = indexCar->next;
+        }
+        returnValue = fread(newCar, sizeof(struct cell_B), 1, pFile);
+        indexCar->next = newCar;
+        newCar->next = NULL;
+    }
+    return start;
+}
+struct cell_B *ReadListIn(struct cell_B *start)
+{
+
+    FILE *pFile;
+    pFile = fopen("SAVE\\SavedLink.data", "rb");
+    if (pFile != NULL)
+    {
+
+        start = NULL;
+        fseek(pFile, 0, SEEK_END);
+        long fileSize = ftell(pFile);
+        rewind(pFile);
+
+        int numEntries = (int)(fileSize / (sizeof(struct cell_B)));
+        // printf("numEntries:%d\n",numEntries);
+
+        int loop = 0;
+        for (loop = 0; loop < numEntries; ++loop)
+        {
+            fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
             start = ReadNextFromFile(start, pFile);
         }
     }

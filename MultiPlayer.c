@@ -640,7 +640,7 @@ struct cell_A *ReadNextFromFileA(struct cell_A *start, FILE *pFile)
 struct cell_A *ReadListInA(struct cell_A *start)
 {
     FILE *pFile;
-    pFile = fopen("SAVE_MULTI\\SavedLinkB.data", "rb");
+    pFile = fopen("SAVE_MULTI\\SavedLinkA.data", "rb");
     if (pFile != NULL)
     {
 
@@ -656,7 +656,7 @@ struct cell_A *ReadListInA(struct cell_A *start)
         for (loop = 0; loop < numEntries; ++loop)
         {
             fseek(pFile, (sizeof(struct cell_A) * loop), SEEK_SET);
-            start = ReadNextFromFile(start, pFile);
+            start = ReadNextFromFileA(start, pFile);
         }
     }
 
@@ -704,7 +704,7 @@ struct cell_B *ReadListInB(struct cell_B *start)
         for (loop = 0; loop < numEntries; ++loop)
         {
             fseek(pFile, (sizeof(struct cell_B) * loop), SEEK_SET);
-            start = ReadNextFromFile(start, pFile);
+            start = ReadNextFromFileB(start, pFile);
         }
     }
 
@@ -1119,7 +1119,7 @@ void RoundA(int flag)
             break;
 
         case 4:
-            //Save
+            Save();
             // SaveA();
             break;
 
@@ -1201,7 +1201,7 @@ void RoundB(int flag)
 
         case 4:
             //Save
-            // SaveB();
+            Save();
             break;
 
         case 5:
@@ -1247,29 +1247,42 @@ void Save()
 }
 
 // // Load Function
-// void load()
-// {
-//     // Load Cells Array
-//     FILE *SaveCell = fopen("SAVE\\SavedCells.data", "rb");
-//     fread(cells, sizeof(char), sizeof(cells), SaveCell);
-//     fclose(SaveCell);
-//     // Load EnergyBlocks Array
-//     FILE *SaveBlockE = fopen("SAVE\\SavedEblock.data", "rb");
-//     fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
-//     fclose(SaveBlockE);
-//     //Load Linked list
-//     start = ReadListIn(start);
-//     // Load MAP
-//     FILE *SaveMAP = fopen("SAVE\\SavedMAP.bin", "rb");
-//     fread(&n, sizeof(int), 1, SaveMAP);
-//     fread(grid, sizeof(char), sizeof(grid), SaveMAP);
-//     fclose(SaveMAP);
-//     // Load Cell ID
-//     FILE *SaveID = fopen("SAVE\\SaveID", "r");
-//     fscanf(SaveID, "%d", &CellID);
-//     // If it was Signle Player
-//     SinglePlayer(0);
-// }
+void load()
+{
+    // Load Cells Array
+    // For CellsA
+    FILE *SaveCellA = fopen("SAVE_MULTI\\SavedCellsA.data", "rb");
+    fread(cellsA, sizeof(char), sizeof(cellsA), SaveCellA);
+    fclose(SaveCellA);
+    // For CellsB
+    FILE *SaveCellB = fopen("SAVE_MULTI\\SavedCellsB.data", "rb");
+    fread(cellsB, sizeof(char), sizeof(cellsB), SaveCellB);
+    fclose(SaveCellB);
+    // Load EnergyBlocks Array
+    FILE *SaveBlockE = fopen("SAVE_MULTI\\SavedEblock.data", "rb");
+    fread(EnergyBlocks, sizeof(char), sizeof(EnergyBlocks), SaveBlockE);
+    fclose(SaveBlockE);
+    //Load Linked list
+    startA = ReadListInA(startA);
+    startB = ReadListInB(startB);
+    // Load MAP
+    FILE *SaveMAP = fopen("SAVE_MULTI\\SavedMAP.bin", "rb");
+    fread(&n, sizeof(int), 1, SaveMAP);
+    fread(grid, sizeof(char), sizeof(grid), SaveMAP);
+    fclose(SaveMAP);
+    // Load Cell ID
+    FILE *SaveIDA = fopen("SAVE_MULTI\\SaveIDA", "r");
+    fscanf(SaveIDA, "%d", &CellID_A);
+    fclose(SaveIDA);
+    FILE *SaveIDB = fopen("SAVE_MULTI\\SaveIDB", "r");
+    fscanf(SaveIDB, "%d", &CellID_B);
+    fclose(SaveIDB);
+    while (1)
+    {
+        RoundA(0);
+        RoundB(0);
+    }
+}
 
 // MAIN FUNCTION
 int main()
@@ -1295,7 +1308,7 @@ int main()
         break;
     case 2:
         // Load game
-
+        load();
         break;
     case 3:
         //Exit

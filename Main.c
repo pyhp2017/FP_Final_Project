@@ -733,6 +733,7 @@ void load()
     // Load Cell ID
     FILE *SaveID = fopen("SAVE_SINGLE\\SaveID", "r");
     fscanf(SaveID, "%d", &CellID);
+    fclose(SaveID);
     // If it was Signle Player
     SinglePlayer(0);
 }

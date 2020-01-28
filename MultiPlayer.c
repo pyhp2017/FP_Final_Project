@@ -4,7 +4,7 @@
 #include <time.h>
 #include "HeaderFiles\\Menu.h"
 #include "HeaderFiles\\RandString.h"
-
+#define ADDRESS "MAPS\\map6.bin"
 //Global Variables and Arrays
 char grid[100][100];
 char cellsA[100][100];
@@ -325,7 +325,7 @@ void insert_Split_RandAtraf_B(int n, int x, int y)
 // Put N , F , E , M in grid and read Binary File
 void PutINGride()
 {
-    FILE *fpin = fopen("MAPS\\map6.bin", "rb");
+    FILE *fpin = fopen(ADDRESS, "rb");
     fread(&n, sizeof(int), 1, fpin);
     int pos;
     char map[n][n];

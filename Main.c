@@ -649,6 +649,8 @@ void SinglePlayer(int flag)
             MenuMove();
             printf("Please choose your option: ");
             scanf("%d", &movechosen);
+            int movechosen = _getch();
+            
 
             switch (movechosen)
             {

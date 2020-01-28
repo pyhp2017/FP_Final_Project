@@ -789,23 +789,23 @@ void MoveUPB(int ChosenCell)
         if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup-1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
             tmpB->y = Ybackup - 1;
-            cellsB[Xbackup][Ybackup - 1] = 'A';
+            cellsB[Xbackup][Ybackup - 1] = 'B';
             cellsB[Xbackup][Ybackup] = '\0';
         }
     }
 }
-void MovdeDown(int ChosenCell)
+void MovdeDownA(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpA = search(startA, ChosenCell);
+    if (tmpA != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && grid[Xbackup][Ybackup + 1] != 'X' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup +1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmp->y = Ybackup + 1;
-            cells[Xbackup][Ybackup + 1] = 'X';
-            cells[Xbackup][Ybackup] = '\0';
+            tmpA->y = Ybackup + 1;
+            cellsA[Xbackup][Ybackup + 1] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
         }
         else
         {
@@ -813,18 +813,18 @@ void MovdeDown(int ChosenCell)
         }
     }
 }
-void MoveRight(int ChosenCell)
+void MovdeDownB(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpB = search(startB, ChosenCell);
+    if (tmpB != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
-        if (grid[Xbackup + 1][Ybackup] != 'F' && grid[Xbackup + 1][Ybackup] != 'X' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup +1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmp->x = Xbackup + 1;
-            cells[Xbackup + 1][Ybackup] = 'X';
-            cells[Xbackup][Ybackup] = '\0';
+            tmpB->y = Ybackup + 1;
+            cellsB[Xbackup][Ybackup + 1] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
         }
         else
         {
@@ -832,18 +832,75 @@ void MoveRight(int ChosenCell)
         }
     }
 }
-void MoveLeft(int ChosenCell)
+void MoveRightA(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpA = search(startA, ChosenCell);
+    if (tmpA != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
-        if (grid[Xbackup - 1][Ybackup] != 'F' && grid[Xbackup - 1][Ybackup] != 'X' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup + 1][Ybackup] != 'F' && cellsA[Xbackup + 1][Ybackup] != 'A' && cellsB[Xbackup + 1][Ybackup] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
         {
-            tmp->x = Xbackup - 1;
-            cells[Xbackup - 1][Ybackup] = 'X';
-            cells[Xbackup][Ybackup] = '\0';
+            tmpA->x = Xbackup + 1;
+            cellsA[Xbackup + 1][Ybackup] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveRightB(int ChosenCell)
+{
+    tmpB = search(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup + 1][Ybackup] != 'F' && cellsA[Xbackup + 1][Ybackup] != 'A' && cellsB[Xbackup + 1][Ybackup] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
+        {
+            tmpB->x = Xbackup + 1;
+            cellsB[Xbackup + 1][Ybackup] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveLeftA(int ChosenCell)
+{
+    tmpA = search(startA, ChosenCell);
+    if (tmpA != NULL)
+    {
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup - 1][Ybackup] != 'F' && cellsA[Xbackup - 1][Ybackup] != 'A' && cellsB[Xbackup - 1][Ybackup] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        {
+            tmpA->x = Xbackup - 1;
+            cellsA[Xbackup - 1][Ybackup] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveLeftB(int ChosenCell)
+{
+    tmpB = search(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup - 1][Ybackup] != 'F' && cellsA[Xbackup - 1][Ybackup] != 'A' && cellsB[Xbackup - 1][Ybackup] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        {
+            tmpB->x = Xbackup - 1;
+            cellsB[Xbackup - 1][Ybackup] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
         }
         else
         {
@@ -853,16 +910,16 @@ void MoveLeft(int ChosenCell)
 }
 
 // Boost Energy in Energy Blocks
-void BoostEnergy(int ChosenCell)
+void BoostEnergyA(int ChosenCell)
 {
-    tmp = search(start, ChosenCell);
-    if (tmp != NULL)
+    tmpA = search(startA, ChosenCell);
+    if (tmpA != NULL)
     {
-        int Xbackup = tmp->x;
-        int Ybackup = tmp->y;
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
         if (grid[Xbackup][Ybackup] == 'E')
         {
-            if (tmp->EnergyCell == 100)
+            if (tmpA->EnergyCell == 100)
             {
                 printf("\nYou Can Not Reach More Energy !\n");
                 sleep(2);
@@ -870,13 +927,53 @@ void BoostEnergy(int ChosenCell)
             }
             if (EnergyBlocks[Xbackup][Ybackup] > 15)
             {
-                tmp->EnergyCell += 15;
+                tmpA->EnergyCell += 15;
                 EnergyBlocks[Xbackup][Ybackup] -= 15;
             }
             else if (EnergyBlocks[Xbackup][Ybackup] < 15 && EnergyBlocks[Xbackup][Ybackup] >= 0)
             {
                 int Tahmonda = EnergyBlocks[Xbackup][Ybackup];
-                tmp->EnergyCell += Tahmonda;
+                tmpA->EnergyCell += Tahmonda;
+                EnergyBlocks[Xbackup][Ybackup] = 0;
+                grid[Xbackup][Ybackup] = 'N';
+            }
+            else
+            {
+                printf("\nNo More Energy in Here - Empty Storage or Tank\n\n");
+                sleep(2);
+            }
+        }
+        else
+        {
+            printf("\nYou Can Not Boost Energy ON %c \n\n", grid[Xbackup][Ybackup]);
+            sleep(2);
+        }
+    }
+}
+void BoostEnergyB(int ChosenCell)
+{
+    tmpB = search(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup][Ybackup] == 'E')
+        {
+            if (tmpB->EnergyCell == 100)
+            {
+                printf("\nYou Can Not Reach More Energy !\n");
+                sleep(2);
+                return;
+            }
+            if (EnergyBlocks[Xbackup][Ybackup] > 15)
+            {
+                tmpB->EnergyCell += 15;
+                EnergyBlocks[Xbackup][Ybackup] -= 15;
+            }
+            else if (EnergyBlocks[Xbackup][Ybackup] < 15 && EnergyBlocks[Xbackup][Ybackup] >= 0)
+            {
+                int Tahmonda = EnergyBlocks[Xbackup][Ybackup];
+                tmpB->EnergyCell += Tahmonda;
                 EnergyBlocks[Xbackup][Ybackup] = 0;
                 grid[Xbackup][Ybackup] = 'N';
             }

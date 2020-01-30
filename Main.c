@@ -4,7 +4,7 @@
 #include <time.h>
 #include "HeaderFiles\\Menu.h"
 #include "HeaderFiles\\RandString.h"
-#define ADDRESS "MAPS\\map6.bin"
+#define ADDRESS "MAPS\\FineMAP.bin"
 
 //Global Variables and Arrays
 char grid[100][100];

@@ -4,7 +4,7 @@
 #include <time.h>
 #include "HeaderFiles\\Menu.h"
 #include "HeaderFiles\\RandString.h"
-#define ADDRESS "MAPS\\map6.bin"
+#define ADDRESS "MAPS\\FineMAP.bin"
 //Global Variables and Arrays
 char grid[100][100];
 char cellsA[100][100];
@@ -395,25 +395,25 @@ int countB(struct cell_B *start)
 //Score
 void ScoreA(struct cell_A *start)
 {
-    int Scoretotal;
+    int ScoretotalA = 0;
     struct cell_A *trace = start;
     while (trace != NULL)
     {
-        Scoretotal += trace->EnergyCell;
+        ScoretotalA += trace->EnergyCell;
         trace = trace->next;
     }
-    printf("\n\n\t\t\t Total Score for PLAYER A: %d", Scoretotal);
+    printf("\n\n\t\t\t Total Score for PLAYER A: %d", ScoretotalA);
 }
 void ScoreB(struct cell_B *start)
 {
-    int Scoretotal;
+    int ScoretotalB = 0;
     struct cell_B *trace = start;
     while (trace != NULL)
     {
-        Scoretotal += trace->EnergyCell;
+        ScoretotalB += trace->EnergyCell;
         trace = trace->next;
     }
-    printf("\n\t\t\t Total Score for PLAYER B: %d", Scoretotal);
+    printf("\n\t\t\t Total Score for PLAYER B: %d", ScoretotalB);
 }
 
 // Swap Elements

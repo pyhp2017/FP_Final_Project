@@ -392,6 +392,30 @@ int countB(struct cell_B *start)
     return count;
 }
 
+//Score
+void ScoreA(struct cell_A *start)
+{
+    int Scoretotal;
+    struct cell_A *trace = start;
+    while (trace != NULL)
+    {
+        Scoretotal += trace->EnergyCell;
+        trace = trace->next;
+    }
+    printf("\n\n\t\t\t Total Score for PLAYER A: %d", Scoretotal);
+}
+void ScoreB(struct cell_B *start)
+{
+    int Scoretotal;
+    struct cell_B *trace = start;
+    while (trace != NULL)
+    {
+        Scoretotal += trace->EnergyCell;
+        trace = trace->next;
+    }
+    printf("\n\t\t\t Total Score for PLAYER B: %d", Scoretotal);
+}
+
 // Swap Elements
 void swap(int *X, int *Y)
 {
@@ -1191,7 +1215,7 @@ void RoundA(int flag)
                 // North West
                 MoveNorthwestA(ChosenCell);
                 break;
-                
+
             case 5:
                 // South East
                 MoveSoutheastA(ChosenCell);
@@ -1220,6 +1244,8 @@ void RoundA(int flag)
             break;
 
         case 5:
+            ScoreA(startA);
+            ScoreB(startB);
             exit(0);
             break;
         }
@@ -1282,7 +1308,7 @@ void RoundB(int flag)
                 // North West
                 MoveNorthwestB(ChosenCell);
                 break;
-                
+
             case 5:
                 // South East
                 MoveSoutheastB(ChosenCell);
@@ -1311,6 +1337,8 @@ void RoundB(int flag)
             break;
 
         case 5:
+            ScoreA(startA);
+            ScoreB(startB);
             exit(0);
             break;
         }

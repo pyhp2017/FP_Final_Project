@@ -246,6 +246,19 @@ void swap(int *X, int *Y)
     *Y = temp;
 }
 
+void Score(struct cell *start)
+{
+    int Scoretotal;
+    struct cell *trace = start;
+    while (trace != NULL)
+    {
+        Scoretotal += trace->EnergyCell;
+        trace = trace->next;
+    }
+    printf("\n\n\t\t\t Total Score for PLAYER: %d" , Scoretotal);
+
+}
+
 // Display Linked list Nodes
 void display(struct cell *start)
 {
@@ -738,6 +751,7 @@ void SinglePlayer(int flag)
             break;
 
         case 5:
+            Score(start);
             exit(0);
             break;
         }

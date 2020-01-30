@@ -463,7 +463,7 @@ void drawgrid(int n)
     }
     printf("\n");
 
-    for (int j = 0; j < n; j++)
+    for (int j = n - 1; j >= 0; j--)
     {
         printf("   ");
         for (int z = 0; z < n; z++)
@@ -764,10 +764,10 @@ void MoveUPA(int ChosenCell)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmpA->y = Ybackup - 1;
-            cellsA[Xbackup][Ybackup - 1] = 'A';
+            tmpA->y = Ybackup + 1;
+            cellsA[Xbackup][Ybackup + 1] = 'A';
             cellsA[Xbackup][Ybackup] = '\0';
         }
     }
@@ -779,10 +779,10 @@ void MoveUPB(int ChosenCell)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmpB->y = Ybackup - 1;
-            cellsB[Xbackup][Ybackup - 1] = 'B';
+            tmpB->y = Ybackup + 1;
+            cellsB[Xbackup][Ybackup + 1] = 'B';
             cellsB[Xbackup][Ybackup] = '\0';
         }
     }
@@ -794,10 +794,10 @@ void MovdeDownA(int ChosenCell)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
-            tmpA->y = Ybackup + 1;
-            cellsA[Xbackup][Ybackup + 1] = 'A';
+            tmpA->y = Ybackup - 1;
+            cellsA[Xbackup][Ybackup - 1] = 'A';
             cellsA[Xbackup][Ybackup] = '\0';
         }
         else
@@ -813,10 +813,10 @@ void MovdeDownB(int ChosenCell)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        if (grid[Xbackup][Ybackup + 1] != 'F' && cellsA[Xbackup][Ybackup + 1] != 'A' && cellsB[Xbackup][Ybackup + 1] != 'B' && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        if (grid[Xbackup][Ybackup - 1] != 'F' && cellsA[Xbackup][Ybackup - 1] != 'A' && cellsB[Xbackup][Ybackup - 1] != 'B' && Ybackup - 1 >= 0 && Ybackup - 1 < n)
         {
-            tmpB->y = Ybackup + 1;
-            cellsB[Xbackup][Ybackup + 1] = 'B';
+            tmpB->y = Ybackup - 1;
+            cellsB[Xbackup][Ybackup - 1] = 'B';
             cellsB[Xbackup][Ybackup] = '\0';
         }
         else
@@ -825,17 +825,19 @@ void MovdeDownB(int ChosenCell)
         }
     }
 }
-void MoveRightA(int ChosenCell)
+
+void MoveNortheastA(int ChosenCell)
 {
     tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup + 1][Ybackup] != 'F' && cellsA[Xbackup + 1][Ybackup] != 'A' && cellsB[Xbackup + 1][Ybackup] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
+        if (grid[Xbackup + 1][Ybackup + 1] != 'F' && cellsA[Xbackup + 1][Ybackup + 1] != 'A' && cellsB[Xbackup + 1][Ybackup + 1] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmpA->x = Xbackup + 1;
-            cellsA[Xbackup + 1][Ybackup] = 'A';
+            tmpA->y = Ybackup + 1;
+            cellsA[Xbackup + 1][Ybackup + 1] = 'A';
             cellsA[Xbackup][Ybackup] = '\0';
         }
         else
@@ -844,36 +846,18 @@ void MoveRightA(int ChosenCell)
         }
     }
 }
-void MoveRightB(int ChosenCell)
-{
-    tmpB = searchB(startB, ChosenCell);
-    if (tmpB != NULL)
-    {
-        int Xbackup = tmpB->x;
-        int Ybackup = tmpB->y;
-        if (grid[Xbackup + 1][Ybackup] != 'F' && cellsA[Xbackup + 1][Ybackup] != 'A' && cellsB[Xbackup + 1][Ybackup] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
-        {
-            tmpB->x = Xbackup + 1;
-            cellsB[Xbackup + 1][Ybackup] = 'B';
-            cellsB[Xbackup][Ybackup] = '\0';
-        }
-        else
-        {
-            return;
-        }
-    }
-}
-void MoveLeftA(int ChosenCell)
+void MoveNorthwestA(int ChosenCell)
 {
     tmpA = searchA(startA, ChosenCell);
     if (tmpA != NULL)
     {
         int Xbackup = tmpA->x;
         int Ybackup = tmpA->y;
-        if (grid[Xbackup - 1][Ybackup] != 'F' && cellsA[Xbackup - 1][Ybackup] != 'A' && cellsB[Xbackup - 1][Ybackup] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        if (grid[Xbackup - 1][Ybackup + 1] != 'F' && cellsA[Xbackup - 1][Ybackup + 1] != 'A' && cellsB[Xbackup - 1][Ybackup + 1] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmpA->x = Xbackup - 1;
-            cellsA[Xbackup - 1][Ybackup] = 'A';
+            tmpA->y = Ybackup + 1;
+            cellsA[Xbackup - 1][Ybackup + 1] = 'A';
             cellsA[Xbackup][Ybackup] = '\0';
         }
         else
@@ -882,17 +866,58 @@ void MoveLeftA(int ChosenCell)
         }
     }
 }
-void MoveLeftB(int ChosenCell)
+void MoveSoutheastA(int ChosenCell)
+{
+    tmpA = searchA(startA, ChosenCell);
+    if (tmpA != NULL)
+    {
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup + 1][Ybackup - 1] != 'F' && cellsA[Xbackup + 1][Ybackup - 1] != 'A' && cellsB[Xbackup + 1][Ybackup - 1] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmpA->x = Xbackup + 1;
+            tmpA->y = Ybackup - 1;
+            cellsA[Xbackup + 1][Ybackup - 1] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveSouthwestA(int ChosenCell)
+{
+    tmpA = searchA(startA, ChosenCell);
+    if (tmpA != NULL)
+    {
+        int Xbackup = tmpA->x;
+        int Ybackup = tmpA->y;
+        if (grid[Xbackup - 1][Ybackup - 1] != 'F' && cellsA[Xbackup - 1][Ybackup - 1] != 'A' && cellsB[Xbackup - 1][Ybackup - 1] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmpA->x = Xbackup - 1;
+            tmpA->y = Ybackup - 1;
+            cellsA[Xbackup - 1][Ybackup - 1] = 'A';
+            cellsA[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveNortheastB(int ChosenCell)
 {
     tmpB = searchB(startB, ChosenCell);
     if (tmpB != NULL)
     {
         int Xbackup = tmpB->x;
         int Ybackup = tmpB->y;
-        if (grid[Xbackup - 1][Ybackup] != 'F' && cellsA[Xbackup - 1][Ybackup] != 'A' && cellsB[Xbackup - 1][Ybackup] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        if (grid[Xbackup + 1][Ybackup + 1] != 'F' && cellsA[Xbackup + 1][Ybackup + 1] != 'A' && cellsB[Xbackup + 1][Ybackup + 1] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
-            tmpB->x = Xbackup - 1;
-            cellsB[Xbackup - 1][Ybackup] = 'B';
+            tmpB->x = Xbackup + 1;
+            tmpB->y = Ybackup + 1;
+            cellsB[Xbackup + 1][Ybackup + 1] = 'B';
             cellsB[Xbackup][Ybackup] = '\0';
         }
         else
@@ -901,6 +926,67 @@ void MoveLeftB(int ChosenCell)
         }
     }
 }
+void MoveNorthwestB(int ChosenCell)
+{
+    tmpB = searchB(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup - 1][Ybackup + 1] != 'F' && cellsA[Xbackup - 1][Ybackup + 1] != 'A' && cellsB[Xbackup - 1][Ybackup + 1] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
+        {
+            tmpB->x = Xbackup - 1;
+            tmpB->y = Ybackup + 1;
+            cellsB[Xbackup - 1][Ybackup + 1] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveSoutheastB(int ChosenCell)
+{
+    tmpB = searchB(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup + 1][Ybackup - 1] != 'F' && cellsA[Xbackup + 1][Ybackup - 1] != 'A' && cellsB[Xbackup + 1][Ybackup - 1] != 'B' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmpB->x = Xbackup + 1;
+            tmpB->y = Ybackup - 1;
+            cellsB[Xbackup + 1][Ybackup - 1] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveSouthwestB(int ChosenCell)
+{
+    tmpB = searchB(startB, ChosenCell);
+    if (tmpB != NULL)
+    {
+        int Xbackup = tmpB->x;
+        int Ybackup = tmpB->y;
+        if (grid[Xbackup - 1][Ybackup - 1] != 'F' && cellsA[Xbackup - 1][Ybackup - 1] != 'A' && cellsB[Xbackup - 1][Ybackup - 1] != 'B' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmpB->x = Xbackup - 1;
+            tmpB->y = Ybackup - 1;
+            cellsB[Xbackup - 1][Ybackup - 1] = 'B';
+            cellsB[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+
 // Boost Energy in Energy Blocks
 void BoostEnergyA(int ChosenCell)
 {
@@ -1097,13 +1183,23 @@ void RoundA(int flag)
                 break;
 
             case 3:
-                // Right
-                MoveRightA(ChosenCell);
+                // North East
+                MoveNortheastA(ChosenCell);
                 break;
 
             case 4:
-                // Left
-                MoveLeftA(ChosenCell);
+                // North West
+                MoveNorthwestA(ChosenCell);
+                break;
+                
+            case 5:
+                // South East
+                MoveSoutheastA(ChosenCell);
+                break;
+
+            case 6:
+                // South West
+                MoveSouthwestA(ChosenCell);
                 break;
             }
             break;
@@ -1178,13 +1274,23 @@ void RoundB(int flag)
                 break;
 
             case 3:
-                // Right
-                MoveRightB(ChosenCell);
+                // North East
+                MoveNortheastB(ChosenCell);
                 break;
 
             case 4:
-                // Left
-                MoveLeftB(ChosenCell);
+                // North West
+                MoveNorthwestB(ChosenCell);
+                break;
+                
+            case 5:
+                // South East
+                MoveSoutheastB(ChosenCell);
+                break;
+
+            case 6:
+                // South West
+                MoveSouthwestB(ChosenCell);
                 break;
             }
             break;

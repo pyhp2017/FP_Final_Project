@@ -4,8 +4,7 @@
 #include <time.h>
 #include "HeaderFiles\\Menu.h"
 #include "HeaderFiles\\RandString.h"
-#define ADDRESS "MAPS\\New_Map.bin"
-
+#define ADDRESS "MAPS\\map6.bin"
 
 //Global Variables and Arrays
 char grid[100][100];
@@ -182,7 +181,7 @@ void PutINGride()
     {
         printf("Error");
     }
-    
+
     fread(&n, sizeof(int), 1, fpin);
     int pos;
     char map[n][n];
@@ -285,7 +284,7 @@ void drawgrid(int n)
     }
     printf("\n");
 
-    for (int j = n-1; j>=0; j--)
+    for (int j = n - 1; j >= 0; j--)
     {
         printf("   ");
         for (int z = 0; z < n; z++)
@@ -325,8 +324,6 @@ void drawgrid(int n)
             {
                 printf("|   |");
             }
-            
-            
         }
         printf("\x1b[0m");
         printf("\n");
@@ -498,17 +495,18 @@ void MovdeDown(int ChosenCell)
         }
     }
 }
-void MoveRight(int ChosenCell)
+void MoveNortheast(int ChosenCell)
 {
     tmp = search(start, ChosenCell);
     if (tmp != NULL)
     {
         int Xbackup = tmp->x;
         int Ybackup = tmp->y;
-        if (grid[Xbackup + 1][Ybackup] != 'F' && cells[Xbackup + 1][Ybackup] != 'X' && Xbackup + 1 >= 0 && Xbackup + 1 < n)
+        if (grid[Xbackup + 1][Ybackup + 1] != 'F' && cells[Xbackup + 1][Ybackup + 1] != 'X' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmp->x = Xbackup + 1;
-            cells[Xbackup + 1][Ybackup] = 'X';
+            tmp->y = Ybackup + 1;
+            cells[Xbackup + 1][Ybackup + 1] = 'X';
             cells[Xbackup][Ybackup] = '\0';
         }
         else
@@ -517,17 +515,58 @@ void MoveRight(int ChosenCell)
         }
     }
 }
-void MoveLeft(int ChosenCell)
+void MoveNorthwest(int ChosenCell)
 {
     tmp = search(start, ChosenCell);
     if (tmp != NULL)
     {
         int Xbackup = tmp->x;
         int Ybackup = tmp->y;
-        if (grid[Xbackup - 1][Ybackup] != 'F' && cells[Xbackup - 1][Ybackup] != 'X' && Xbackup - 1 >= 0 && Xbackup - 1 < n)
+        if (grid[Xbackup - 1][Ybackup + 1] != 'F' && cells[Xbackup - 1][Ybackup + 1] != 'X' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup + 1 >= 0 && Ybackup + 1 < n)
         {
             tmp->x = Xbackup - 1;
-            cells[Xbackup - 1][Ybackup] = 'X';
+            tmp->y = Ybackup + 1;
+            cells[Xbackup - 1][Ybackup + 1] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveSoutheast(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup + 1][Ybackup - 1] != 'F' && cells[Xbackup + 1][Ybackup - 1] != 'X' && Xbackup + 1 >= 0 && Xbackup + 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmp->x = Xbackup + 1;
+            tmp->y = Ybackup - 1;
+            cells[Xbackup + 1][Ybackup - 1] = 'X';
+            cells[Xbackup][Ybackup] = '\0';
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+void MoveSouthwest(int ChosenCell)
+{
+    tmp = search(start, ChosenCell);
+    if (tmp != NULL)
+    {
+        int Xbackup = tmp->x;
+        int Ybackup = tmp->y;
+        if (grid[Xbackup - 1][Ybackup - 1] != 'F' && cells[Xbackup - 1][Ybackup - 1] != 'X' && Xbackup - 1 >= 0 && Xbackup - 1 < n && Ybackup - 1 >= 0 && Ybackup - 1 < n)
+        {
+            tmp->x = Xbackup - 1;
+            tmp->y = Ybackup - 1;
+            cells[Xbackup - 1][Ybackup - 1] = 'X';
             cells[Xbackup][Ybackup] = '\0';
         }
         else
@@ -647,7 +686,7 @@ void SinglePlayer(int flag)
             // MOVE
             MenuMove();
             printf("Please choose your option: ");
-            scanf("%d", &movechosen);            
+            scanf("%d", &movechosen);
 
             switch (movechosen)
             {
@@ -662,13 +701,23 @@ void SinglePlayer(int flag)
                 break;
 
             case 3:
-                // Right
-                MoveRight(ChosenCell);
+                // Noth East
+                MoveNortheast(ChosenCell);
                 break;
 
             case 4:
-                // Left
-                MoveLeft(ChosenCell);
+                // North West
+                MoveNorthwest(ChosenCell);
+                break;
+
+            case 5:
+                // South East
+                MoveSoutheast(ChosenCell);
+                break;
+
+            case 6:
+                // South West
+                MoveSouthwest(ChosenCell);
                 break;
             }
             break;
@@ -762,7 +811,7 @@ int main()
         //Single Player
         menuSingle();
         printf("Please Select Your Mode: ");
-        scanf("%d" , &OptionList2);
+        scanf("%d", &OptionList2);
         switch (OptionList2)
         {
         case 1:
@@ -784,6 +833,11 @@ int main()
         system("start MultiPlayer.exe");
         break;
     case 3:
+        //Map Editor
+        // JUST RUN EXE FILE (REDIRECT)
+        system("start MapEditior.exe");
+        break;
+    case 4:
         //Exit
         exit(0);
         break;

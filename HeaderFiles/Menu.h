@@ -18,7 +18,8 @@ void menuSingle()
     printf("\n\t\t\t SINGLE PLAYER GAME");
     printf("\n\t\t\t[1] NEW Game");
     printf("\n\t\t\t[2] LOAD GAME");
-    printf("\n\t\t\t[3] EXIT");
+    printf("\n\t\t\t[3] Back To Main Menu");
+    printf("\n\t\t\t[4] EXIT");
     printf("\n\n");
 }
 
@@ -29,7 +30,8 @@ void menuMulti()
     printf("\n\t\t\t MULTI PLAYER GAME");
     printf("\n\t\t\t[1] NEW Game");
     printf("\n\t\t\t[2] LOAD GAME");
-    printf("\n\t\t\t[3] EXIT");
+    printf("\n\t\t\t[3] Back To Main Menu");
+    printf("\n\t\t\t[4] EXIT");
     printf("\n\n");
 }
 
@@ -64,4 +66,23 @@ void guide()
     printf("\n\t\t\t\t Just Choose Your Option ! This is Fucking Simple Game Not COD !");
     printf("\n\n\n");
     printf("\t\t\t Back ? [1]Yes [0]Exit ---> ");
+}
+
+void MenuEdit()
+{
+    system("color a");
+    system("cls");
+    printf("\n\t\t\t [1] Create New MAP");
+    printf("\n\t\t\t [2] Edit MAP");
+    printf("\n\t\t\t [3] Back To Main Menu");
+    printf("\n\t\t\t [4] EXIT");
+}
+
+void MenuChange()
+{
+    printf("\n\n\t\t\t[1] ENERGY");
+    printf("\n\n\t\t\t[2] MITOSIS");
+    printf("\n\n\t\t\t[3] FORBIDDEN");
+    printf("\n\n\t\t\t[4] NORMAL");
+    printf("\n\n\t\t\t[5] EXIT");
 }

@@ -1445,6 +1445,10 @@ int main()
         load();
         break;
     case 3:
+        //Back
+        system("Main.exe");
+        break;
+    case 4:
         //Exit
         exit(0);
         break;

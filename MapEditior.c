@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "HeaderFiles\\Menu.h"
 #define ADDRESS "CreateMAP\\New_Map.bin"
 
 int n;
@@ -87,24 +88,6 @@ void SaveMap()
     fclose(fptr);
 }
 
-void Menu()
-{
-    system("color a");
-    system("cls");
-    printf("\n\t\t\t [1] Create New MAP");
-    printf("\n\t\t\t [2] Edit MAP");
-    printf("\n\t\t\t [3] EXIT");
-}
-
-void MenuChange()
-{
-    printf("\n\n\t\t\t[1] ENERGY");
-    printf("\n\n\t\t\t[2] MITOSIS");
-    printf("\n\n\t\t\t[3] FORBIDDEN");
-    printf("\n\n\t\t\t[4] NORMAL");
-    printf("\n\n\t\t\t[5] EXIT");
-}
-
 void saveOption(int flag)
 {
     int x, y, option;
@@ -172,7 +155,7 @@ void LoadOption()
 int main()
 {
     int option;
-    Menu();
+    MenuEdit();
     printf("\n\n\t\t\t Please Select an Option: ");
     scanf("%d", &option);
     switch (option)
@@ -184,6 +167,9 @@ int main()
         LoadOption();
         break;
     case 3:
+        system("Main.exe");
+        break;
+    case 4:
         exit(0);
         break;
     }

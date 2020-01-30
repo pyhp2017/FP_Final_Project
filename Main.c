@@ -255,8 +255,7 @@ void Score(struct cell *start)
         Scoretotal += trace->EnergyCell;
         trace = trace->next;
     }
-    printf("\n\n\t\t\t Total Score for PLAYER: %d" , Scoretotal);
-
+    printf("\n\n\t\t\t Total Score for PLAYER: %d", Scoretotal);
 }
 
 // Display Linked list Nodes
@@ -837,6 +836,10 @@ int main()
             load();
             break;
         case 3:
+            // Back
+            system("Main.exe");
+            break;
+        case 4:
             exit(0);
             break;
         }
@@ -854,7 +857,7 @@ int main()
     case 4:
         //Guide
         guide();
-        scanf("%d" , &option);
+        scanf("%d", &option);
         if (option)
         {
             system("main.exe");

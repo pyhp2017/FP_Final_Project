@@ -4,7 +4,7 @@
 #include <time.h>
 #include "HeaderFiles\\Menu.h"
 #include "HeaderFiles\\RandString.h"
-#define ADDRESS "MAPS\\map6.bin"
+#define ADDRESS "MAPS\\New_Map.bin"
 
 
 //Global Variables and Arrays
@@ -13,7 +13,6 @@ char cells[100][100];
 int EnergyBlocks[100][100];
 int CellID = 1;
 int n;
-// char 
 
 enum blocks //Enum For Blocks
 {
@@ -181,7 +180,7 @@ void PutINGride()
     FILE *fpin = fopen(ADDRESS, "rb");
     if (fpin == NULL)
     {
-        printf("Erro");
+        printf("Error");
     }
     
     fread(&n, sizeof(int), 1, fpin);

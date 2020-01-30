@@ -844,14 +844,24 @@ int main()
     case 2:
         // Multi Player
         // JUST RUN EXE FILE (REDIRECT)
-        system("start MultiPlayer.exe");
+        system("MultiPlayer.exe");
         break;
     case 3:
         //Map Editor
         // JUST RUN EXE FILE (REDIRECT)
-        system("start MapEditior.exe");
+        system("MapEditior.exe");
         break;
     case 4:
+        //Guide
+        guide();
+        scanf("%d" , &option);
+        if (option)
+        {
+            system("main.exe");
+        }
+
+        break;
+    case 5:
         //Exit
         exit(0);
         break;

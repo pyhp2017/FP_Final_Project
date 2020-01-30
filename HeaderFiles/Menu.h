@@ -6,7 +6,8 @@ void menu()
     printf("\n\t\t\t[1] Single Player Game");
     printf("\n\t\t\t[2] Multi Player Game");
     printf("\n\t\t\t[3] MAP Editor");
-    printf("\n\t\t\t[4] EXIT");
+    printf("\n\t\t\t[4] Guide");
+    printf("\n\t\t\t[5] EXIT");
     printf("\n\n");
 }
 
@@ -49,4 +50,18 @@ void MenuMove()
     printf("[4] North West \n");
     printf("[5] South East \n");
     printf("[6] South West \n");
+}
+
+void guide()
+{
+    printf("\n\n\t\t\t Colors meaning: ");
+    printf("\n\t\t\t\t Green ---- > Energy Blocks ");
+    printf("\n\t\t\t\t Blue ---- > MITOSIS Blocks ");
+    printf("\n\t\t\t\t RED ---- > FORBIDDEN Blocks ");
+    printf("\n\t\t\t\t White ---- > NORMAL Blocks ");
+
+    printf("\n\n\n\t\t\t How To Play ?");
+    printf("\n\t\t\t\t Just Choose Your Option ! This is Fucking Simple Game Not COD !");
+    printf("\n\n\n");
+    printf("\t\t\t Back ? [1]Yes [0]Exit ---> ");
 }

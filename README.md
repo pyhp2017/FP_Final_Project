@@ -14,5 +14,3 @@ How To Run Game ?
 
     Before Everything just Compile Main.c & MultiPlayer.c & MapEditor.c to Executeable files in Same Direcotry and then Start Main.exe
     Enjoy !
-
-https://www.downloadha.com/shop/zula-dc20200108.jpg
